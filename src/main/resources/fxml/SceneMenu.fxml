@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="checkers.controller.FXMLControllerMenu">
+    <children>
+        <Button fx:id="button" layoutX="132.0" layoutY="55.0" onAction="#handleButtonActionNewGame" text="Új játék" />
+      <Text layoutX="108.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dámajáték">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Text>
+      <Button fx:id="button1" layoutX="85.0" layoutY="88.0" onAction="#handleButtonActionLoadGame" text="Legutóbbi játék betöltése" />
+      <Button fx:id="button2" layoutX="128.0" layoutY="149.0" onAction="#handleButtonActionRank" text="Ranglista" />
+    </children>
+</AnchorPane>

@@ -9,13 +9,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="checkers.controller.FXMLControllerRank">
+<AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.menu.FXMLRank">
     <children>
       <Text layoutX="87.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Korábbi eredmények">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Text>
-      <Button fx:id="button" layoutX="14.0" layoutY="161.0" onAction="#handleButtonActionBack" text="&lt;- Vissza" />
+      <Button fx:id="backButton" layoutX="14.0" layoutY="161.0" onAction="#actionBack" text="&lt;- Vissza" />
     </children>
 </AnchorPane>

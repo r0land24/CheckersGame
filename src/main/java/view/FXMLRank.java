@@ -1,4 +1,4 @@
-package controller.checkers.popup;
+package view;
 
 import java.io.IOException;
 import java.net.URL;
@@ -12,17 +12,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import model.DomWriter;
 
-public class FXMLSaveGame implements Initializable {
-
-	@FXML
-	private Button saveButton, backButton;
+public class FXMLRank implements Initializable {
 
 	@FXML
-	private void actionSave(ActionEvent event) {
+	private Button backButton;
+
+	@FXML
+	private void actionBack(ActionEvent event) {
 		try {
-			Stage stage = (Stage) saveButton.getScene().getWindow();
+			Stage stage = (Stage) backButton.getScene().getWindow();
 
 			Parent root = FXMLLoader.load(getClass().getResource("/fxml/SceneMainMenu.fxml"));
 			Scene scene = new Scene(root);
@@ -30,22 +29,10 @@ public class FXMLSaveGame implements Initializable {
 			stage.setTitle("Dámajáték - Menü");
 			stage.setScene(scene);
 			stage.show();
-			
-			DomWriter.domWriter();	//tábla mentése xml-be
-
-			Stage gameStage = (Stage) stage.getUserData();
-			gameStage.close();
-
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	@FXML
-	private void actionBack(ActionEvent event) {
-		Stage stage = (Stage) backButton.getScene().getWindow();
-		stage.close();
 	}
 
 	@Override

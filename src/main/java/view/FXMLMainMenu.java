@@ -1,11 +1,11 @@
-package controller.menu;
+package view;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
-import controller.checkers.CheckersLogic;
-import controller.checkers.save.SaveLatestBoard;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +14,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import model.DomReader;
+import model.dom.Dom;
+import model.dom.impl.DomImpl;
+import service.board.Board;
+import service.converter.PieceConverter;
+import service.impl.CheckersLogic;
+import service.vo.PieceVo;
 
 public class FXMLMainMenu implements Initializable {
 
@@ -39,8 +44,16 @@ public class FXMLMainMenu implements Initializable {
 		Stage stage = (Stage) loadGameButton.getScene().getWindow();
 
 		CheckersLogic checkers = CheckersLogic.getInstance();
-		DomReader.domReader(); // beolvassuk xml-ből
-		Scene scene = new Scene(checkers.createContent(SaveLatestBoard.getSavedBoard()));
+
+		// Beolvasás XML-ből
+		Dom dom = new DomImpl();
+		List<PieceVo> list = new ArrayList<>();
+		for (int i = 0; i < dom.domReader().size(); i++) {
+			list.add(PieceConverter.toPieceVo(dom.domReader().get(i)));
+		}
+		CheckersLogic.getInstance().saveBoard(list);
+
+		Scene scene = new Scene(checkers.createContent(Board.getSavedBoard()));
 		checkers.addEscape(stage);
 
 		stage.setTitle("Dámajáték (legutóbbi játék)");

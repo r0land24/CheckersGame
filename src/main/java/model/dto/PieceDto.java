@@ -1,16 +1,18 @@
-package model;
+package model.dto;
 
-import view.PieceType;
-
-public class TileXMLForm {
+public class PieceDto {
 
 	private int coordinateX;
 
 	private int coordinateY;
 
-	private PieceType pieceType;
+	private String pieceType;
 
-	public TileXMLForm(int coordinateX, int coordinateY, PieceType pieceType) {
+	public PieceDto() {
+
+	}
+
+	public PieceDto(int coordinateX, int coordinateY, String pieceType) {
 		super();
 		this.coordinateX = coordinateX;
 		this.coordinateY = coordinateY;
@@ -33,11 +35,11 @@ public class TileXMLForm {
 		this.coordinateY = coordinateY;
 	}
 
-	public PieceType getPieceType() {
+	public String getPieceType() {
 		return pieceType;
 	}
 
-	public void setPieceType(PieceType pieceType) {
+	public void setPieceType(String pieceType) {
 		this.pieceType = pieceType;
 	}
 

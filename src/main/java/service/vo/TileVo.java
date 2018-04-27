@@ -1,34 +1,23 @@
-package view;
+package service.vo;
 
-import static controller.checkers.CheckersLogic.TILE_SIZE;
+import static model.properties.BoardProperties.TILE_SIZE;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Tile extends Rectangle {
+public class TileVo extends Rectangle {
 
-	private int tileCoordinateX;
-	private int tileCoordinateY;
-
-	public int getTileCoordinateX() {
-		return tileCoordinateX;
-	}
-
-	public int getTileCoordinateY() {
-		return tileCoordinateY;
-	}
-
-	private Piece piece;
+	private PieceVo piece;
 
 	public boolean hasPiece() {
 		return piece != null;
 	}
 
-	public Piece getPiece() {
+	public PieceVo getPiece() {
 		return piece;
 	}
 
-	public void setPiece(Piece piece) {
+	public void setPiece(PieceVo piece) {
 		this.piece = piece;
 	}
 
@@ -37,7 +26,7 @@ public class Tile extends Rectangle {
 	 * színét, x! és y! a relocatehez(rajzoláshoz) kell, amik amúgy tábla
 	 * kordináták.
 	 */
-	public Tile(boolean light, int x, int y) {
+	public TileVo(boolean light, int x, int y) {
 		setWidth(TILE_SIZE);
 		setHeight(TILE_SIZE);
 
@@ -45,7 +34,5 @@ public class Tile extends Rectangle {
 
 		setFill(light ? Color.GOLD : Color.BROWN);
 
-		tileCoordinateX = x;
-		tileCoordinateY = y; // Roland
 	}
 }

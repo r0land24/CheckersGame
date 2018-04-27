@@ -41,43 +41,43 @@
         <pieceType>DARK</pieceType>
     </tile>
     <tile>
-        <coordinateX>1</coordinateX>
-        <coordinateY>2</coordinateY>
-        <pieceType>DARK</pieceType>
-    </tile>
-    <tile>
-        <coordinateX>3</coordinateX>
-        <coordinateY>2</coordinateY>
-        <pieceType>DARK</pieceType>
-    </tile>
-    <tile>
-        <coordinateX>5</coordinateX>
-        <coordinateY>2</coordinateY>
-        <pieceType>DARK</pieceType>
-    </tile>
-    <tile>
-        <coordinateX>7</coordinateX>
-        <coordinateY>2</coordinateY>
-        <pieceType>DARK</pieceType>
-    </tile>
-    <tile>
         <coordinateX>0</coordinateX>
-        <coordinateY>5</coordinateY>
-        <pieceType>WHITE</pieceType>
+        <coordinateY>3</coordinateY>
+        <pieceType>DARK</pieceType>
     </tile>
     <tile>
         <coordinateX>2</coordinateX>
-        <coordinateY>5</coordinateY>
-        <pieceType>WHITE</pieceType>
+        <coordinateY>3</coordinateY>
+        <pieceType>DARK</pieceType>
     </tile>
     <tile>
         <coordinateX>4</coordinateX>
-        <coordinateY>5</coordinateY>
-        <pieceType>WHITE</pieceType>
+        <coordinateY>3</coordinateY>
+        <pieceType>DARK</pieceType>
     </tile>
     <tile>
         <coordinateX>6</coordinateX>
-        <coordinateY>5</coordinateY>
+        <coordinateY>3</coordinateY>
+        <pieceType>DARK</pieceType>
+    </tile>
+    <tile>
+        <coordinateX>1</coordinateX>
+        <coordinateY>4</coordinateY>
+        <pieceType>WHITE</pieceType>
+    </tile>
+    <tile>
+        <coordinateX>3</coordinateX>
+        <coordinateY>4</coordinateY>
+        <pieceType>WHITE</pieceType>
+    </tile>
+    <tile>
+        <coordinateX>5</coordinateX>
+        <coordinateY>4</coordinateY>
+        <pieceType>WHITE</pieceType>
+    </tile>
+    <tile>
+        <coordinateX>7</coordinateX>
+        <coordinateY>4</coordinateY>
         <pieceType>WHITE</pieceType>
     </tile>
     <tile>

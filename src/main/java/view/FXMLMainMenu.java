@@ -18,7 +18,7 @@ import model.dom.Dom;
 import model.dom.impl.DomImpl;
 import service.board.Board;
 import service.converter.PieceConverter;
-import service.impl.CheckersLogic;
+import service.impl.BoardServicesImpl;
 import service.vo.PieceVo;
 
 public class FXMLMainMenu implements Initializable {
@@ -30,9 +30,10 @@ public class FXMLMainMenu implements Initializable {
 	private void actionNewGame(ActionEvent event) {
 		Stage stage = (Stage) newGameButton.getScene().getWindow();
 
-		CheckersLogic checkers = CheckersLogic.getInstance();
+		BoardServicesImpl checkers = BoardServicesImpl.getInstance();
 		Scene scene = new Scene(checkers.createContent());
 		checkers.addEscape(stage);
+		checkers.addSpace(stage);
 
 		stage.setTitle("Dámajáték (új játék)");
 		stage.setScene(scene);
@@ -43,7 +44,7 @@ public class FXMLMainMenu implements Initializable {
 	private void actionLoadGame(ActionEvent event) {
 		Stage stage = (Stage) loadGameButton.getScene().getWindow();
 
-		CheckersLogic checkers = CheckersLogic.getInstance();
+		BoardServicesImpl checkers = BoardServicesImpl.getInstance();
 
 		// Beolvasás XML-ből
 		Dom dom = new DomImpl();
@@ -51,10 +52,13 @@ public class FXMLMainMenu implements Initializable {
 		for (int i = 0; i < dom.domReader().size(); i++) {
 			list.add(PieceConverter.toPieceVo(dom.domReader().get(i)));
 		}
-		CheckersLogic.getInstance().saveBoard(list);
+		BoardServicesImpl.getInstance().saveBoard(list);
+		System.out.println("WORKS YET");
+		BoardServicesImpl.ai = dom.domAiReader();
 
 		Scene scene = new Scene(checkers.createContent(Board.getSavedBoard()));
 		checkers.addEscape(stage);
+		checkers.addSpace(stage);
 
 		stage.setTitle("Dámajáték (legutóbbi játék)");
 		stage.setScene(scene);

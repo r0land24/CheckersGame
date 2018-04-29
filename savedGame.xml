@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <board>
+    <aiTurn>true</aiTurn>
     <tile>
         <coordinateX>1</coordinateX>
         <coordinateY>0</coordinateY>
@@ -36,23 +37,23 @@
         <pieceType>DARK</pieceType>
     </tile>
     <tile>
-        <coordinateX>6</coordinateX>
-        <coordinateY>1</coordinateY>
+        <coordinateX>1</coordinateX>
+        <coordinateY>2</coordinateY>
         <pieceType>DARK</pieceType>
     </tile>
     <tile>
-        <coordinateX>0</coordinateX>
-        <coordinateY>3</coordinateY>
+        <coordinateX>3</coordinateX>
+        <coordinateY>2</coordinateY>
         <pieceType>DARK</pieceType>
     </tile>
     <tile>
-        <coordinateX>2</coordinateX>
-        <coordinateY>3</coordinateY>
+        <coordinateX>5</coordinateX>
+        <coordinateY>2</coordinateY>
         <pieceType>DARK</pieceType>
     </tile>
     <tile>
-        <coordinateX>4</coordinateX>
-        <coordinateY>3</coordinateY>
+        <coordinateX>7</coordinateX>
+        <coordinateY>2</coordinateY>
         <pieceType>DARK</pieceType>
     </tile>
     <tile>
@@ -76,8 +77,8 @@
         <pieceType>WHITE</pieceType>
     </tile>
     <tile>
-        <coordinateX>7</coordinateX>
-        <coordinateY>4</coordinateY>
+        <coordinateX>6</coordinateX>
+        <coordinateY>5</coordinateY>
         <pieceType>WHITE</pieceType>
     </tile>
     <tile>

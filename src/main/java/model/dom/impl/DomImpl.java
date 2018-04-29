@@ -65,15 +65,19 @@ public class DomImpl implements Dom {
 	}
 
 	@Override
-	public void domWriter(List<PieceDto> list) {
+	public void domWriter(List<PieceDto> list, boolean turnAi) {
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
 
 			Document doc = db.newDocument();
 
+			Element ai = doc.createElement("aiTurn");
+			ai.appendChild(doc.createTextNode(Boolean.toString(turnAi)));
+
 			Element board = doc.createElement("board");
 			doc.appendChild(board);
+			board.appendChild(ai);
 
 			Element tile = null;
 			Element coordinateX = null;
@@ -115,6 +119,37 @@ public class DomImpl implements Dom {
 			Logger.getLogger(DomImpl.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
+	}
+
+	@Override
+	public boolean domAiReader() {
+
+		Boolean aiTurn = null;
+		try {
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+
+			File input = new File("savedGame.xml");
+
+			Document doc = db.parse(input);
+			doc.getDocumentElement().normalize();
+
+			NodeList n1 = doc.getElementsByTagName("aiTurn");
+
+			Element aiElement = (Element) n1.item(0);
+
+			boolean ai = Boolean.parseBoolean(aiElement.getTextContent());
+
+			aiTurn = ai;
+
+		} catch (ParserConfigurationException ex) {
+			Logger.getLogger(DomImpl.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (SAXException ex) {
+			Logger.getLogger(DomImpl.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(DomImpl.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return aiTurn;
 	}
 
 }

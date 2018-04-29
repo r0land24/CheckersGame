@@ -5,9 +5,9 @@ import service.vo.PieceTypeVo;
 import service.vo.PieceVo;
 
 public class PieceConverter {
-	
+
 	public static PieceVo toPieceVo(PieceDto dto) {
-		if (dto==null) {
+		if (dto == null) {
 			return null;
 		}
 		PieceVo vo = new PieceVo();
@@ -16,7 +16,7 @@ public class PieceConverter {
 		vo.setType(PieceTypeVo.valueOf(dto.getPieceType()));
 		return vo;
 	}
-	
+
 	public static PieceDto toPieceDto(PieceVo vo) {
 		PieceDto dto = new PieceDto();
 		dto.setCoordinateX(vo.getCoordX());

@@ -18,7 +18,7 @@ import model.dom.Dom;
 import model.dom.impl.DomImpl;
 import model.dto.PieceDto;
 import service.converter.PieceConverter;
-import service.impl.CheckersLogic;
+import service.impl.BoardServicesImpl;
 
 public class FXMLSaveGame implements Initializable {
 
@@ -40,10 +40,10 @@ public class FXMLSaveGame implements Initializable {
 			// Olyan korongok lementése xml-be amik a táblán el lettek helyezve
 			Dom dom = new DomImpl();
 			List<PieceDto> list = new ArrayList<>();
-			for (int i = 0; i < CheckersLogic.getInstance().pieceList().size(); i++) {
-				list.add(PieceConverter.toPieceDto(CheckersLogic.getInstance().pieceList().get(i)));
+			for (int i = 0; i < BoardServicesImpl.getInstance().pieceList().size(); i++) {
+				list.add(PieceConverter.toPieceDto(BoardServicesImpl.getInstance().pieceList().get(i)));
 			}
-			dom.domWriter(list);
+			dom.domWriter(list,BoardServicesImpl.ai);
 
 			Stage gameStage = (Stage) stage.getUserData();
 			gameStage.close();

@@ -8,5 +8,7 @@ public interface Dom {
 
 	public List<PieceDto> domReader();
 
-	public void domWriter(List<PieceDto> list);
+	public boolean domAiReader();
+
+	public void domWriter(List<PieceDto> list, boolean turnAI);
 }

@@ -6,11 +6,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import service.board.Board;
+import service.impl.BoardServicesImpl;
 
 public class PieceVo extends StackPane {
 
 	private Text text = new Text("");
-
 	private double mouseX, mouseY;
 	private double oldX, oldY; // a korong konkrét helye * tilesize = megrajzolt tile
 	private int coordX;
@@ -104,18 +105,48 @@ public class PieceVo extends StackPane {
 
 		// TEXT
 		getChildren().add(text);
-		text.setTranslateX((TILE_SIZE - TILE_SIZE * 0.3 * 2) / 2);
-		text.setTranslateY((TILE_SIZE - TILE_SIZE * 0.3 * 2) / 2);
-		text.setStroke(type == PieceTypeVo.DARK ? Color.RED : Color.ORANGERED);
-		text.setStrokeWidth(TILE_SIZE * 0.03);
+		text.setTranslateX((TILE_SIZE - TILE_SIZE * 0.33 * 2) / 2);
+		text.setTranslateY((TILE_SIZE - TILE_SIZE * 0.32 * 2) / 2);
+		// text.setStroke(type == PieceTypeVo.DARK ? Color.RED : Color.ORANGERED);
+		text.setStroke(Color.BLACK);
+		text.setStrokeWidth(TILE_SIZE * 0.1);
+
+		// setOnMousePressed(e -> {
+		// System.out.println(((PieceVo) e.getSource()).getType());
+		// mouseX = e.getSceneX();
+		// mouseY = e.getSceneY();
+		//
+		// });
+		//
+		// setOnMouseDragged(e -> {
+		// System.out.println("draged");
+		// relocate(e.getSceneX() - mouseX + oldX, e.getSceneY() - mouseY + oldY);
+		// });
 
 		setOnMousePressed(e -> {
-			mouseX = e.getSceneX();
-			mouseY = e.getSceneY();
+			if (BoardServicesImpl.ai && (
+					((PieceVo) e.getSource()).getType().equals(PieceTypeVo.DARK) ||
+					((PieceVo) e.getSource()).getType().equals(PieceTypeVo.DARK_KING))) {
+//				System.out.println(((PieceVo) e.getSource()).getType());
+//				mouseX = e.getSceneX();
+//				mouseY = e.getSceneY();
+			} else if (!BoardServicesImpl.ai && (
+					((PieceVo) e.getSource()).getType().equals(PieceTypeVo.WHITE) ||
+					((PieceVo) e.getSource()).getType().equals(PieceTypeVo.WHITE_KING))) {
+				mouseX = e.getSceneX();
+				mouseY = e.getSceneY();
+			}
 		});
-
 		setOnMouseDragged(e -> {
-			relocate(e.getSceneX() - mouseX + oldX, e.getSceneY() - mouseY + oldY);
+			if (BoardServicesImpl.ai && (
+					((PieceVo) e.getSource()).getType().equals(PieceTypeVo.DARK) ||
+					((PieceVo) e.getSource()).getType().equals(PieceTypeVo.DARK_KING))) {
+//				relocate(e.getSceneX() - mouseX + oldX, e.getSceneY() - mouseY + oldY);
+			} else if(!BoardServicesImpl.ai && (
+					((PieceVo) e.getSource()).getType().equals(PieceTypeVo.WHITE) ||
+					((PieceVo) e.getSource()).getType().equals(PieceTypeVo.WHITE_KING))) {
+				relocate(e.getSceneX() - mouseX + oldX, e.getSceneY() - mouseY + oldY);
+			}
 		});
 
 	}

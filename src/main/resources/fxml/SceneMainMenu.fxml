@@ -18,6 +18,5 @@
          </font>
       </Text>
       <Button fx:id="loadGameButton" layoutX="85.0" layoutY="88.0" onAction="#actionLoadGame" text="Legutóbbi játék betöltése" />
-      <Button fx:id="rankButton" layoutX="128.0" layoutY="149.0" onAction="#actionRank" text="Ranglista" />
     </children>
 </AnchorPane>

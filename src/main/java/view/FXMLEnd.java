@@ -11,17 +11,21 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-public class FXMLRank implements Initializable {
+public class FXMLEnd implements Initializable {
 
 	@FXML
-	private Button backButton;
+	private Button endButton;
+	
+	@FXML
+	private Label endLabelWhite, endLabelDark;
 
 	@FXML
-	private void actionBack(ActionEvent event) {
+	private void actionEnd(ActionEvent event) {
 		try {
-			Stage stage = (Stage) backButton.getScene().getWindow();
+			Stage stage = (Stage) endButton.getScene().getWindow();
 
 			Parent root = FXMLLoader.load(getClass().getResource("/fxml/SceneMainMenu.fxml"));
 			Scene scene = new Scene(root);
@@ -37,6 +41,13 @@ public class FXMLRank implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		Stage stage = new Stage();
+		String data = ""+stage.getUserData();
+		endLabelDark.setVisible(true);
+		if (data=="white")
+			endLabelWhite.setVisible(true);
+		else 
+			endLabelDark.setVisible(true);
 	}
 
 }

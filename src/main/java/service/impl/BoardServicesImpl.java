@@ -187,6 +187,7 @@ public class BoardServicesImpl implements BoardServices {
 
 	@Override
 	public void saveBoard(List<PieceVo> list) {
+		Board.setSavedBoard(new TileVo[WIDTH][HEIGHT]);
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
 				TileVo tile = new TileVo((x + y) % 2 == 0, x, y);
@@ -323,21 +324,47 @@ public class BoardServicesImpl implements BoardServices {
 		return (int) (pixel + TILE_SIZE / 2) / TILE_SIZE;
 	}
 
-	private void checkEndGame() {
-		Board.getBoard()[1][1].getScene().getWindow().setOpacity(0.5);
-		Thread one = new Thread() {
-			public void run() {
-				for (int i = 0; i < 50; i++) {
-					try {
-						System.out.println("Does it work?");
-						Thread.sleep(2000);
-					} catch (InterruptedException v) {
-						System.out.println(v);
-					}
+	public void checkEndGame(TileVo[][] board) {
+		int dark = 0;
+		int white = 0;
+		for (int y = 0; y < HEIGHT; y++) {
+			for (int x = 0; x < WIDTH; x++) {
+				if(board[x][y].hasPiece() && 
+						( board[x][y].getPiece().getType().equals(PieceTypeVo.DARK) 
+								|| board[x][y].getPiece().getType().equals(PieceTypeVo.DARK_KING))) {
+					dark++;
+				} else if(board[x][y].hasPiece() && 
+						( board[x][y].getPiece().getType().equals(PieceTypeVo.WHITE) 
+								|| board[x][y].getPiece().getType().equals(PieceTypeVo.WHITE_KING))) {
+					white++;
 				}
-
 			}
-		};
+		}
+		System.out.println(dark+ " "+ white);
+		if (dark==0 || white==0) {
+			Stage stage = (Stage) board[0][0].getScene().getWindow();
+				Stage stage2 = new Stage();
+				Parent root = new Parent() {
+				};
+				try {
+					root = FXMLLoader.load(getClass().getResource("/fxml/SceneEnd.fxml"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Scene scene = new Scene(root);
+	
+				stage2.setTitle("Dámajáték");
+				stage2.setScene(scene);
+				if (dark==0)
+					stage2.setUserData("white");
+				else if (white==0)
+					stage2.setUserData("dark");
+				stage2.show();
+				stage.close();
+			
+		}
+		
 	}
 
 	public void closeStage(Stage stage) {
@@ -429,18 +456,7 @@ public class BoardServicesImpl implements BoardServices {
 				if (movedPiece > 0)
 					break;
 			}
-
-			// });
 		}
-
-		// if (movedPiece == 0) {
-		// System.out.println("játék vége");
-		// Stage stage = null;
-		// stage = (Stage)Board.getBoard()[0][0].getScene().getWindow();
-		// stage.close();
-		// }
-
-		// return currentPiece;
 	}
 
 	public void doubleKill() {
@@ -450,6 +466,7 @@ public class BoardServicesImpl implements BoardServices {
 	public void addSpace(Stage stage) {
 		stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
 			if (KeyCode.SPACE == event.getCode()) {
+				checkEndGame(Board.getBoard());
 				if (ai) {
 					aImove();
 				}

@@ -1,15 +1,12 @@
 package service.board;
 
-import static model.properties.BoardProperties.HEIGHT;
-import static model.properties.BoardProperties.WIDTH;
-
 import javafx.scene.Group;
 import service.vo.TileVo;
 
 public class Board {
 
 	private static TileVo[][] board = null;
-	private static TileVo[][] savedBoard = new TileVo[WIDTH][HEIGHT];
+	private static TileVo[][] savedBoard = null; //new TileVo[WIDTH][HEIGHT];
 	private static Group tileGroup = null;
 	private static Group pieceGroup = null;
 

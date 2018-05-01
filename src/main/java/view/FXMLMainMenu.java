@@ -1,6 +1,5 @@
 package view;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +7,7 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -24,7 +21,7 @@ import service.vo.PieceVo;
 public class FXMLMainMenu implements Initializable {
 
 	@FXML
-	private Button newGameButton, loadGameButton, rankButton;
+	private Button newGameButton, loadGameButton;
 
 	@FXML
 	private void actionNewGame(ActionEvent event) {
@@ -65,25 +62,13 @@ public class FXMLMainMenu implements Initializable {
 		stage.show();
 	}
 
-	@FXML
-	private void actionRank(ActionEvent event) {
-		try {
-			Stage stage = (Stage) rankButton.getScene().getWindow();
-
-			Parent root = FXMLLoader.load(getClass().getResource("/fxml/SceneRank.fxml"));
-			Scene scene = new Scene(root);
-
-			stage.setTitle("Dámajáték ranglista");
-			stage.setScene(scene);
-			stage.show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		Dom dom = new DomImpl();
+		if (null == dom.domReader())
+			loadGameButton.setDisable(true);
+		else
+			loadGameButton.setDisable(false);
 	}
 
 }

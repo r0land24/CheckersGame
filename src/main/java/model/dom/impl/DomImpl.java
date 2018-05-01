@@ -38,6 +38,8 @@ public class DomImpl implements Dom {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 
 			File input = new File("savedGame.xml");
+			if (!input.exists())
+				return null;
 
 			Document doc = db.parse(input);
 			doc.getDocumentElement().normalize();

@@ -28,6 +28,14 @@ public class FXMLSaveGame implements Initializable {
 	@FXML
 	private void actionSave(ActionEvent event) {
 		try {
+			// Olyan korongok lementése xml-be amik a táblán el lettek helyezve
+			Dom dom = new DomImpl();
+			List<PieceDto> list = new ArrayList<>();
+			for (int i = 0; i < BoardServicesImpl.getInstance().pieceList().size(); i++) {
+				list.add(PieceConverter.toPieceDto(BoardServicesImpl.getInstance().pieceList().get(i)));
+			}
+			dom.domWriter(list, BoardServicesImpl.ai);
+			
 			Stage stage = (Stage) saveButton.getScene().getWindow();
 
 			Parent root = FXMLLoader.load(getClass().getResource("/fxml/SceneMainMenu.fxml"));
@@ -36,14 +44,6 @@ public class FXMLSaveGame implements Initializable {
 			stage.setTitle("Dámajáték - Menü");
 			stage.setScene(scene);
 			stage.show();
-
-			// Olyan korongok lementése xml-be amik a táblán el lettek helyezve
-			Dom dom = new DomImpl();
-			List<PieceDto> list = new ArrayList<>();
-			for (int i = 0; i < BoardServicesImpl.getInstance().pieceList().size(); i++) {
-				list.add(PieceConverter.toPieceDto(BoardServicesImpl.getInstance().pieceList().get(i)));
-			}
-			dom.domWriter(list,BoardServicesImpl.ai);
 
 			Stage gameStage = (Stage) stage.getUserData();
 			gameStage.close();

@@ -9,7 +9,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FXMLMainMenu">
+<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLMainMenu">
     <children>
         <Button fx:id="newGameButton" layoutX="132.0" layoutY="55.0" onAction="#actionNewGame" text="Új játék" />
       <Text layoutX="108.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dámajáték">

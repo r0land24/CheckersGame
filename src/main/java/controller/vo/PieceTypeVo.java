@@ -1,4 +1,4 @@
-package service.vo;
+package controller.vo;
 
 public enum PieceTypeVo {
 	WHITE(-1), WHITE_KING(0), DARK(1), DARK_KING(0);

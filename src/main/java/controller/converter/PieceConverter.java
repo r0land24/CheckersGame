@@ -1,8 +1,8 @@
-package service.converter;
+package controller.converter;
 
+import controller.vo.PieceTypeVo;
+import controller.vo.PieceVo;
 import model.dto.PieceDto;
-import service.vo.PieceTypeVo;
-import service.vo.PieceVo;
 
 public class PieceConverter {
 

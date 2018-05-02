@@ -1,14 +1,20 @@
-package service.impl;
+package controller.service.impl;
 
-import static model.properties.BoardProperties.HEIGHT;
-import static model.properties.BoardProperties.TILE_SIZE;
-import static model.properties.BoardProperties.WIDTH;
+import static model.board.Board.HEIGHT;
+import static model.board.Board.TILE_SIZE;
+import static model.board.Board.WIDTH;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import controller.service.BoardServices;
+import controller.vo.MoveResult;
+import controller.vo.MoveType;
+import controller.vo.PieceTypeVo;
+import controller.vo.PieceVo;
+import controller.vo.TileVo;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -17,13 +23,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import service.BoardServices;
-import service.board.Board;
-import service.vo.MoveResult;
-import service.vo.MoveType;
-import service.vo.PieceTypeVo;
-import service.vo.PieceVo;
-import service.vo.TileVo;
+import model.board.Board;
 
 public class BoardServicesImpl implements BoardServices {
 
@@ -176,7 +176,6 @@ public class BoardServicesImpl implements BoardServices {
 				Board.getBoard()[toBoard(otherPiece.getOldX())][toBoard(otherPiece.getOldY())].setPiece(null);
 				Board.getPieceGroup().getChildren().remove(otherPiece);
 
-				doubleKill();
 				ai = !ai;
 				break;
 			}
@@ -340,7 +339,6 @@ public class BoardServicesImpl implements BoardServices {
 				}
 			}
 		}
-		System.out.println(dark+ " "+ white);
 		if (dark==0 || white==0) {
 			Stage stage = (Stage) board[0][0].getScene().getWindow();
 				Stage stage2 = new Stage();
@@ -457,10 +455,6 @@ public class BoardServicesImpl implements BoardServices {
 					break;
 			}
 		}
-	}
-
-	public void doubleKill() {
-
 	}
 
 	public void addSpace(Stage stage) {

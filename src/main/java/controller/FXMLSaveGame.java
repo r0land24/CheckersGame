@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import controller.converter.PieceConverter;
+import controller.service.impl.BoardServicesImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,8 +19,6 @@ import javafx.stage.Stage;
 import model.dom.Dom;
 import model.dom.impl.DomImpl;
 import model.dto.PieceDto;
-import service.converter.PieceConverter;
-import service.impl.BoardServicesImpl;
 
 public class FXMLSaveGame implements Initializable {
 

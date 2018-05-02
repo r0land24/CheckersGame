@@ -1,12 +1,12 @@
-package service;
+package controller.service;
 
 import java.util.List;
 
+import controller.vo.PieceTypeVo;
+import controller.vo.PieceVo;
+import controller.vo.TileVo;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
-import service.vo.PieceTypeVo;
-import service.vo.PieceVo;
-import service.vo.TileVo;
 
 public interface BoardServices {
 

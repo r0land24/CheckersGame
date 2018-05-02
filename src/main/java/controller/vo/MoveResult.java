@@ -1,4 +1,4 @@
-package service.vo;
+package controller.vo;
 
 public class MoveResult {
 

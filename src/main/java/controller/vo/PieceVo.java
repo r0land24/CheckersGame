@@ -1,12 +1,12 @@
-package service.vo;
+package controller.vo;
 
-import static model.properties.BoardProperties.TILE_SIZE;
+import static model.board.Board.TILE_SIZE;
 
+import controller.service.impl.BoardServicesImpl;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-import service.impl.BoardServicesImpl;
 
 public class PieceVo extends StackPane {
 

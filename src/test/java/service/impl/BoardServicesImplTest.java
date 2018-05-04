@@ -5,7 +5,7 @@ import static model.vo.Board.WIDTH;
 
 import org.junit.Test;
 
-import model.services.BoardServicesImpl;
+import model.services.BoardService;
 import model.vo.Board;
 import model.vo.PieceType;
 
@@ -17,7 +17,7 @@ public class BoardServicesImplTest {
 
 	@Test
 	public void testCreateContent() {
-		BoardServicesImpl.getInstance().createContent();
+		BoardService.getInstance().createContent();
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
 				Board.getBoard()[x][y].hasPiece();
@@ -27,7 +27,7 @@ public class BoardServicesImplTest {
 	
 	@Test
 	public void testMakePiece() {
-		BoardServicesImpl.getInstance().makePiece(PieceType.DARK, 2, 3);
+		BoardService.getInstance().makePiece(PieceType.DARK, 2, 3);
 	}
 
 	
@@ -35,7 +35,7 @@ public class BoardServicesImplTest {
 //	public void testAdsa() {
 //		Board.setSavedBoard(new TileVo[WIDTH][HEIGHT]);
 //		Board.getSavedBoard()[0][0].hasPiece();
-////		BoardServicesImpl.getInstance().createContent(Board.getSavedBoard());
+////		BoardService.getInstance().createContent(Board.getSavedBoard());
 //
 //	}
 }

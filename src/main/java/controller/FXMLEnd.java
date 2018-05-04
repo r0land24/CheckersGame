@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,11 +17,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+/**
+ * Osztály a játé végi ablak kezelésére.
+ */
 public class FXMLEnd implements Initializable {
+
+	private static Logger logger = LoggerFactory.getLogger(FXMLEnd.class);
 
 	@FXML
 	private Button endButton;
-	
+
 	@FXML
 	private Label endLabelWhite, endLabelDark;
 
@@ -34,20 +42,21 @@ public class FXMLEnd implements Initializable {
 			stage.setScene(scene);
 			stage.show();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("MainMenu betöltése sikertelen: " + e.getMessage());
 		}
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		Stage stage = new Stage();
-		String data = ""+stage.getUserData();
-		endLabelDark.setVisible(true);
-		if (data=="white")
+		String winner = "" + stage.getUserData();
+		if (winner == "white") {
 			endLabelWhite.setVisible(true);
-		else 
+			logger.info("Játék vége, világos nyert");
+		} else {
 			endLabelDark.setVisible(true);
+			logger.info("Játék vége, sötét nyert");
+		}
 	}
 
 }

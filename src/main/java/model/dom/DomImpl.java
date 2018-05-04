@@ -23,14 +23,15 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import model.dto.PieceDto;
+import model.vo.Piece;
+import model.vo.PieceType;
 
 public class DomImpl implements Dom {
 
 	@Override
-	public List<PieceDto> domPieceReader() {
+	public List<Piece> domPieceReader() {
 
-		List<PieceDto> list = new ArrayList<>();
+		List<Piece> list = new ArrayList<>();
 
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -52,7 +53,8 @@ public class DomImpl implements Dom {
 				int coordinateY = Integer.parseInt(e.getElementsByTagName("coordinateY").item(0).getTextContent());
 				String pieceType = e.getElementsByTagName("pieceType").item(0).getTextContent();
 
-				list.add(new PieceDto(coordinateX, coordinateY, pieceType));
+				list.add(new Piece(PieceType.valueOf(pieceType), coordinateX, coordinateY));
+				// list.add(new PieceDto(coordinateX, coordinateY, pieceType));
 			}
 
 		} catch (ParserConfigurationException ex) {
@@ -66,7 +68,7 @@ public class DomImpl implements Dom {
 	}
 
 	@Override
-	public void domWriter(List<PieceDto> list, boolean turnAi) {
+	public void domWriter(List<Piece> list, boolean aisTurn) {
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
@@ -74,7 +76,7 @@ public class DomImpl implements Dom {
 			Document doc = db.newDocument();
 
 			Element ai = doc.createElement("aiTurn");
-			ai.appendChild(doc.createTextNode(Boolean.toString(turnAi)));
+			ai.appendChild(doc.createTextNode(Boolean.toString(aisTurn)));
 
 			Element board = doc.createElement("board");
 			doc.appendChild(board);
@@ -88,15 +90,15 @@ public class DomImpl implements Dom {
 
 				tile = doc.createElement("tile");
 				coordinateX = doc.createElement("coordinateX");
-				coordinateX.appendChild(doc.createTextNode(String.valueOf(list.get(x).getCoordinateX())));
+				coordinateX.appendChild(doc.createTextNode(String.valueOf(list.get(x).getCoordX())));
 				tile.appendChild(coordinateX);
 
 				coordinateY = doc.createElement("coordinateY");
-				coordinateY.appendChild(doc.createTextNode(String.valueOf(list.get(x).getCoordinateY())));
+				coordinateY.appendChild(doc.createTextNode(String.valueOf(list.get(x).getCoordY())));
 				tile.appendChild(coordinateY);
 
 				pieceType = doc.createElement("pieceType");
-				pieceType.appendChild(doc.createTextNode(String.valueOf(list.get(x).getPieceType())));
+				pieceType.appendChild(doc.createTextNode(String.valueOf(list.get(x).getType())));
 				tile.appendChild(pieceType);
 				board.appendChild(tile);
 

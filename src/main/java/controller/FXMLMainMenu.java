@@ -1,14 +1,11 @@
 package controller;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import controller.converter.PieceConverter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,16 +14,16 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import model.dom.Dom;
 import model.dom.DomImpl;
-import model.services.BoardServicesImpl;
+import model.services.BoardService;
+import model.services.BoardUtilsService;
 import model.vo.Board;
-import model.vo.Piece;
 
+/**
+ * Osztály a főmenü kezelésére.
+ */
 public class FXMLMainMenu implements Initializable {
 
-	/**
-	 * Logger változó.
-	 */
-	final static Logger logger = LoggerFactory.getLogger(FXMLMainMenu.class);
+	private static Logger logger = LoggerFactory.getLogger(FXMLMainMenu.class);
 
 	@FXML
 	private Button newGameButton, loadGameButton;
@@ -35,9 +32,9 @@ public class FXMLMainMenu implements Initializable {
 	private void actionNewGame(ActionEvent event) {
 		Stage stage = (Stage) newGameButton.getScene().getWindow();
 
-		BoardServicesImpl checkers = BoardServicesImpl.getInstance(); // példányosít
-		Scene scene = new Scene(checkers.createContent()); // elkészül a tábla feltöltve
-		
+		BoardService service = BoardService.getInstance(); // példányosít
+		Scene scene = new Scene(service.createContent()); // elkészül a tábla feltöltve
+
 		PressedKeys key = new PressedKeys();
 		key.addSpace(stage); // space gombnyomásra akció
 		key.addEscape(stage); // escape gombnyomásra akció
@@ -53,27 +50,20 @@ public class FXMLMainMenu implements Initializable {
 	private void actionLoadGame(ActionEvent event) {
 		Stage stage = (Stage) loadGameButton.getScene().getWindow();
 
-		// Beolvasás XML-ből
+		// XML adatok feldolgozása
 		Dom dom = new DomImpl();
-		List<Piece> list = new ArrayList<>();
-		for (int i = 0; i < dom.domPieceReader().size(); i++) {
-			list.add(PieceConverter.toPieceVo(dom.domPieceReader().get(i)));
-		}
-		
-		BoardServicesImpl checkers = BoardServicesImpl.getInstance();
-		
-		checkers.saveBoard(list);
-//		BoardServicesImpl.getInstance().saveBoard(list);
+		BoardService service = BoardService.getInstance();
+		BoardUtilsService utilsService = BoardUtilsService.getInstance();
+		utilsService.saveBoard(dom.domPieceReader());
 		Board.setAIsTurn(dom.domAiReader());
-//		BoardServicesImpl.ai = dom.domAiReader();
 
-		Scene scene = new Scene(checkers.createContent(Board.getSavedBoard()));
-//		checkers.addEscape(stage);
-		
+		Scene scene = new Scene(service.createContent(Board.getSavedBoard()));
+
 		PressedKeys key = new PressedKeys();
 		key.addSpace(stage);
 		key.addEscape(stage);
-//		checkers.addSpace(stage);
+
+		logger.info("Betöltődött a mentés, játék elindult");
 
 		stage.setTitle("Dámajáték - mentett játék");
 		stage.setScene(scene);

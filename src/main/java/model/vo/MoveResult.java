@@ -1,4 +1,4 @@
-package controller.vo;
+package model.vo;
 
 public class MoveResult {
 
@@ -8,9 +8,9 @@ public class MoveResult {
 		return type;
 	}
 
-	private PieceVo piece;
+	private Piece piece;
 
-	public PieceVo getPiece() {
+	public Piece getPiece() {
 		return piece;
 	}
 
@@ -18,7 +18,7 @@ public class MoveResult {
 		this(type, null);
 	}
 
-	public MoveResult(MoveType type, PieceVo piece) {
+	public MoveResult(MoveType type, Piece piece) {
 		this.type = type;
 		this.piece = piece;
 	}

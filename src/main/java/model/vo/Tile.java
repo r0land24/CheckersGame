@@ -1,23 +1,23 @@
-package controller.vo;
+package model.vo;
 
-import static model.board.Board.TILE_SIZE;
+import static model.vo.Board.TILE_SIZE;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class TileVo extends Rectangle {
+public class Tile extends Rectangle {
 
-	private PieceVo piece;
+	private Piece piece;
 
 	public boolean hasPiece() {
 		return piece != null;
 	}
 
-	public PieceVo getPiece() {
+	public Piece getPiece() {
 		return piece;
 	}
 
-	public void setPiece(PieceVo piece) {
+	public void setPiece(Piece piece) {
 		this.piece = piece;
 	}
 
@@ -26,7 +26,7 @@ public class TileVo extends Rectangle {
 	 * színét, x! és y! a relocatehez(rajzoláshoz) kell, amik amúgy tábla
 	 * kordináták.
 	 */
-	public TileVo(boolean light, int x, int y) {
+	public Tile(boolean light, int x, int y) {
 		setWidth(TILE_SIZE);
 		setHeight(TILE_SIZE);
 

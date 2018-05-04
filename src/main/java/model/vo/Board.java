@@ -1,6 +1,5 @@
-package model.board;
+package model.vo;
 
-import controller.vo.TileVo;
 import javafx.scene.Group;
 
 public class Board {
@@ -14,26 +13,27 @@ public class Board {
 	/** A sakktábla kockáinak a száma az Y tengelyen, magasság. */
 	public static final int HEIGHT = 8;
 
-	private static TileVo[][] board = null;
-	private static TileVo[][] savedBoard = null; //new TileVo[WIDTH][HEIGHT];
+	private static boolean aisTurn = false;
+	private static Tile[][] board = null;
+	private static Tile[][] savedBoard = null; //new TileVo[WIDTH][HEIGHT];
 	private static Group tileGroup = null;
 	private static Group pieceGroup = null;
 
 	/** Visszaadja az aktuális sakktáblát */
-	public static TileVo[][] getBoard() {
+	public static Tile[][] getBoard() {
 		return board;
 	}
 
 	/** Megadhatjuk az új sakktáblát */
-	public static void setBoard(TileVo[][] board) {
+	public static void setBoard(Tile[][] board) {
 		Board.board = board;
 	}
 	
-	public static TileVo[][] getSavedBoard() {
+	public static Tile[][] getSavedBoard() {
 		return savedBoard;
 	}
 
-	public static void setSavedBoard(TileVo[][] board) {
+	public static void setSavedBoard(Tile[][] board) {
 		Board.savedBoard = board;
 	}
 
@@ -51,6 +51,14 @@ public class Board {
 
 	public static void setPieceGroup(Group pieceGroup) {
 		Board.pieceGroup = pieceGroup;
+	}
+
+	public static boolean isAIsTurn() {
+		return aisTurn;
+	}
+
+	public static void setAIsTurn(boolean aisTurn) {
+		Board.aisTurn = aisTurn;
 	}
 
 }

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import controller.converter.PieceConverter;
-import controller.service.impl.BoardServicesImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,8 +16,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import model.dom.Dom;
-import model.dom.impl.DomImpl;
+import model.dom.DomImpl;
 import model.dto.PieceDto;
+import model.services.BoardServicesImpl;
+import model.vo.Board;
 
 public class FXMLSaveGame implements Initializable {
 
@@ -34,7 +35,7 @@ public class FXMLSaveGame implements Initializable {
 			for (int i = 0; i < BoardServicesImpl.getInstance().pieceList().size(); i++) {
 				list.add(PieceConverter.toPieceDto(BoardServicesImpl.getInstance().pieceList().get(i)));
 			}
-			dom.domWriter(list, BoardServicesImpl.ai);
+			dom.domWriter(list, Board.isAIsTurn());
 			
 			Stage stage = (Stage) saveButton.getScene().getWindow();
 

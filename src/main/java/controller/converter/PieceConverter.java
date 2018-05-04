@@ -1,23 +1,23 @@
 package controller.converter;
 
-import controller.vo.PieceTypeVo;
-import controller.vo.PieceVo;
 import model.dto.PieceDto;
+import model.vo.PieceType;
+import model.vo.Piece;
 
 public class PieceConverter {
 
-	public static PieceVo toPieceVo(PieceDto dto) {
+	public static Piece toPieceVo(PieceDto dto) {
 		if (dto == null) {
 			return null;
 		}
-		PieceVo vo = new PieceVo();
+		Piece vo = new Piece();
 		vo.setCoordX(dto.getCoordinateX());
 		vo.setCoordY(dto.getCoordinateY());
-		vo.setType(PieceTypeVo.valueOf(dto.getPieceType()));
+		vo.setType(PieceType.valueOf(dto.getPieceType()));
 		return vo;
 	}
 
-	public static PieceDto toPieceDto(PieceVo vo) {
+	public static PieceDto toPieceDto(Piece vo) {
 		PieceDto dto = new PieceDto();
 		dto.setCoordinateX(vo.getCoordX());
 		dto.setCoordinateY(vo.getCoordY());

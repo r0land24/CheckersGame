@@ -1,13 +1,13 @@
 package service.impl;
 
-import static model.board.Board.HEIGHT;
-import static model.board.Board.WIDTH;
+import static model.vo.Board.HEIGHT;
+import static model.vo.Board.WIDTH;
 
 import org.junit.Test;
 
-import controller.service.impl.BoardServicesImpl;
-import controller.vo.PieceTypeVo;
-import model.board.Board;
+import model.services.BoardServicesImpl;
+import model.vo.Board;
+import model.vo.PieceType;
 
 public class BoardServicesImplTest {
 
@@ -27,7 +27,7 @@ public class BoardServicesImplTest {
 	
 	@Test
 	public void testMakePiece() {
-		BoardServicesImpl.getInstance().makePiece(PieceTypeVo.DARK, 2, 3);
+		BoardServicesImpl.getInstance().makePiece(PieceType.DARK, 2, 3);
 	}
 
 	

@@ -6,7 +6,10 @@ import model.dto.PieceDto;
 
 public interface Dom {
 
-	public List<PieceDto> domReader();
+	/**
+     * beolvassuk az xml-t.
+     */
+	public List<PieceDto> domPieceReader();
 
 	public boolean domAiReader();
 

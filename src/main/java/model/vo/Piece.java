@@ -1,14 +1,14 @@
-package controller.vo;
+package model.vo;
 
-import static model.board.Board.TILE_SIZE;
+import static model.vo.Board.TILE_SIZE;
 
-import controller.service.impl.BoardServicesImpl;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import model.services.BoardServicesImpl;
 
-public class PieceVo extends StackPane {
+public class Piece extends StackPane {
 
 	private Text text = new Text("");
 	private double mouseX, mouseY;
@@ -32,7 +32,7 @@ public class PieceVo extends StackPane {
 		this.coordY = coordY;
 	}
 
-	private PieceTypeVo type;
+	private PieceType type;
 
 	public Text getText() {
 		return text;
@@ -74,26 +74,26 @@ public class PieceVo extends StackPane {
 		this.oldY = oldY;
 	}
 
-	public PieceTypeVo getType() {
+	public PieceType getType() {
 		return type;
 	}
 
-	public void setType(PieceTypeVo type) {
+	public void setType(PieceType type) {
 		this.type = type;
 	}
 
-	public PieceVo() {
+	public Piece() {
 
 	}
 
-	public PieceVo(PieceTypeVo type, int x, int y) {
+	public Piece(PieceType type, int x, int y) {
 		this.type = type;
 
 		// relocate(x * TILE_SIZE, y * TILE_SIZE);
 		move(x, y); // relocate helyett MOVE
 
 		Circle ellipse = new Circle(TILE_SIZE * 0.26);
-		ellipse.setFill(type == PieceTypeVo.DARK ? Color.CORNFLOWERBLUE : Color.WHITE);
+		ellipse.setFill(type == PieceType.DARK ? Color.CORNFLOWERBLUE : Color.WHITE);
 
 		ellipse.setStroke(Color.BLACK);
 		ellipse.setStrokeWidth(TILE_SIZE * 0.03);
@@ -123,23 +123,23 @@ public class PieceVo extends StackPane {
 		// });
 
 		setOnMousePressed(e -> {
-			if (BoardServicesImpl.ai && (((PieceVo) e.getSource()).getType().equals(PieceTypeVo.DARK)
-					|| ((PieceVo) e.getSource()).getType().equals(PieceTypeVo.DARK_KING))) {
+			if (Board.isAIsTurn() && (((Piece) e.getSource()).getType().equals(PieceType.DARK)
+					|| ((Piece) e.getSource()).getType().equals(PieceType.DARK_KING))) {
 				// System.out.println(((PieceVo) e.getSource()).getType());
 				// mouseX = e.getSceneX();
 				// mouseY = e.getSceneY();
-			} else if (!BoardServicesImpl.ai && (((PieceVo) e.getSource()).getType().equals(PieceTypeVo.WHITE)
-					|| ((PieceVo) e.getSource()).getType().equals(PieceTypeVo.WHITE_KING))) {
+			} else if (!Board.isAIsTurn() && (((Piece) e.getSource()).getType().equals(PieceType.WHITE)
+					|| ((Piece) e.getSource()).getType().equals(PieceType.WHITE_KING))) {
 				mouseX = e.getSceneX();
 				mouseY = e.getSceneY();
 			}
 		});
 		setOnMouseDragged(e -> {
-			if (BoardServicesImpl.ai && (((PieceVo) e.getSource()).getType().equals(PieceTypeVo.DARK)
-					|| ((PieceVo) e.getSource()).getType().equals(PieceTypeVo.DARK_KING))) {
+			if (Board.isAIsTurn() && (((Piece) e.getSource()).getType().equals(PieceType.DARK)
+					|| ((Piece) e.getSource()).getType().equals(PieceType.DARK_KING))) {
 				// relocate(e.getSceneX() - mouseX + oldX, e.getSceneY() - mouseY + oldY);
-			} else if (!BoardServicesImpl.ai && (((PieceVo) e.getSource()).getType().equals(PieceTypeVo.WHITE)
-					|| ((PieceVo) e.getSource()).getType().equals(PieceTypeVo.WHITE_KING))) {
+			} else if (!Board.isAIsTurn() && (((Piece) e.getSource()).getType().equals(PieceType.WHITE)
+					|| ((Piece) e.getSource()).getType().equals(PieceType.WHITE_KING))) {
 				relocate(e.getSceneX() - mouseX + oldX, e.getSceneY() - mouseY + oldY);
 			}
 		});

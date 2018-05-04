@@ -1,4 +1,4 @@
-package model.dom.impl;
+package model.dom;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,13 +23,12 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import model.dom.Dom;
 import model.dto.PieceDto;
 
 public class DomImpl implements Dom {
 
 	@Override
-	public List<PieceDto> domReader() {
+	public List<PieceDto> domPieceReader() {
 
 		List<PieceDto> list = new ArrayList<>();
 

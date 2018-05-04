@@ -12,7 +12,7 @@
 
 <AnchorPane id="AnchorPane" opacity="0.84" prefHeight="99.0" prefWidth="222.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLSaveGame">
    <children>
-      <Button fx:id="saveButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#actionSave" text="Játék mentése és kilépés menübe" />
-      <Button fx:id="backButton" cancelButton="true" layoutX="14.0" layoutY="52.0" mnemonicParsing="false" onAction="#actionBack" text="Mégse" />
+      <Button id="saveGame" fx:id="saveButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#actionSave" text="Játék mentése és kilépés menübe" />
+      <Button fx:id="backButton" cancelButton="true" layoutX="14.0" layoutY="52.0" mnemonicParsing="false" onAction="#actionBack" text="Vissza" />
    </children>
 </AnchorPane>

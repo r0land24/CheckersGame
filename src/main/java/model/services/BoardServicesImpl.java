@@ -1,20 +1,14 @@
-package controller.service.impl;
+package model.services;
 
-import static model.board.Board.HEIGHT;
-import static model.board.Board.TILE_SIZE;
-import static model.board.Board.WIDTH;
+import static model.vo.Board.HEIGHT;
+import static model.vo.Board.TILE_SIZE;
+import static model.vo.Board.WIDTH;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import controller.service.BoardServices;
-import controller.vo.MoveResult;
-import controller.vo.MoveType;
-import controller.vo.PieceTypeVo;
-import controller.vo.PieceVo;
-import controller.vo.TileVo;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -23,11 +17,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import model.board.Board;
+import model.vo.Board;
+import model.vo.MoveResult;
+import model.vo.MoveType;
+import model.vo.PieceType;
+import model.vo.Piece;
+import model.vo.Tile;
 
 public class BoardServicesImpl implements BoardServices {
-
-	public static boolean ai = false;
 
 	private static BoardServicesImpl firstInstance = null;
 
@@ -35,7 +32,7 @@ public class BoardServicesImpl implements BoardServices {
 		// Singleton
 	}
 
-	/** Singleton példány */
+	/** Példányosít egy {@code BoardServicesImpl} objektumot. */
 	public static BoardServicesImpl getInstance() {
 		if (firstInstance == null) {
 			firstInstance = new BoardServicesImpl();
@@ -43,10 +40,10 @@ public class BoardServicesImpl implements BoardServices {
 		return firstInstance;
 	}
 
-	/** Új játék esetén létrehozott sakktábla */
+	/** Feltölti a és feltölti a korongokkal. */
 	@Override
 	public Parent createContent() {
-		Board.setBoard(new TileVo[WIDTH][HEIGHT]);
+		Board.setBoard(new Tile[WIDTH][HEIGHT]);
 		Board.setTileGroup(new Group());
 		Board.setPieceGroup(new Group());
 		Pane root = new Pane();
@@ -55,20 +52,20 @@ public class BoardServicesImpl implements BoardServices {
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
 				// minden világos tile páros számú
-				TileVo tile = new TileVo((x + y) % 2 == 0, x, y); //
+				Tile tile = new Tile((x + y) % 2 == 0, x, y); //
 
 				Board.getBoard()[x][y] = tile;
 
 				Board.getTileGroup().getChildren().add(tile);
 
-				PieceVo piece = null;
+				Piece piece = null;
 
 				if (y <= 2 && (x + y) % 2 != 0) {
-					piece = makePiece(PieceTypeVo.DARK, x, y);
+					piece = makePiece(PieceType.DARK, x, y);
 				}
 
 				if (y >= 5 && (x + y) % 2 != 0) {
-					piece = makePiece(PieceTypeVo.WHITE, x, y);
+					piece = makePiece(PieceType.WHITE, x, y);
 				}
 
 				if (piece != null) {
@@ -87,8 +84,8 @@ public class BoardServicesImpl implements BoardServices {
 	 * tábla
 	 */
 	@Override
-	public Parent createContent(TileVo[][] savedBoard) {
-		Board.setBoard(new TileVo[WIDTH][HEIGHT]);
+	public Parent createContent(Tile[][] savedBoard) {
+		Board.setBoard(new Tile[WIDTH][HEIGHT]);
 		Board.setTileGroup(new Group());
 		Board.setPieceGroup(new Group());
 		Pane root = new Pane();
@@ -97,21 +94,21 @@ public class BoardServicesImpl implements BoardServices {
 
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
-				TileVo tile = new TileVo((x + y) % 2 == 0, x, y);
+				Tile tile = new Tile((x + y) % 2 == 0, x, y);
 				Board.getBoard()[x][y] = tile;
 				Board.getTileGroup().getChildren().add(tile);
 				if (savedBoard[x][y].hasPiece()) {
-					PieceVo piece = null;
+					Piece piece = null;
 
-					if (savedBoard[x][y].getPiece().getType().equals(PieceTypeVo.DARK)) {
-						piece = makePiece(PieceTypeVo.DARK, x, y);
-					} else if (savedBoard[x][y].getPiece().getType().equals(PieceTypeVo.WHITE)) {
-						piece = makePiece(PieceTypeVo.WHITE, x, y);
-					} else if (savedBoard[x][y].getPiece().getType().equals(PieceTypeVo.WHITE_KING)) {
-						piece = makePiece(PieceTypeVo.WHITE_KING, x, y);
+					if (savedBoard[x][y].getPiece().getType().equals(PieceType.DARK)) {
+						piece = makePiece(PieceType.DARK, x, y);
+					} else if (savedBoard[x][y].getPiece().getType().equals(PieceType.WHITE)) {
+						piece = makePiece(PieceType.WHITE, x, y);
+					} else if (savedBoard[x][y].getPiece().getType().equals(PieceType.WHITE_KING)) {
+						piece = makePiece(PieceType.WHITE_KING, x, y);
 						piece.setText("K");
-					} else if (savedBoard[x][y].getPiece().getType().equals(PieceTypeVo.DARK_KING)){
-						piece = makePiece(PieceTypeVo.DARK_KING, x, y);
+					} else if (savedBoard[x][y].getPiece().getType().equals(PieceType.DARK_KING)){
+						piece = makePiece(PieceType.DARK_KING, x, y);
 						piece.setText("K");
 					}
 
@@ -123,10 +120,16 @@ public class BoardServicesImpl implements BoardServices {
 		return root;
 	}
 
-	/** Korong létrehozás, mozgásra történő újrarajzolás stb. */
+	 /**
+     * Létrehozza a megadott típusú korongot a megadott koordinátákon.
+     *
+     * @param type a korong típusa
+     * @param x az x koordináta
+     * @param y az y koordináta
+     */
 	@Override
-	public PieceVo makePiece(PieceTypeVo type, int x, int y) {
-		PieceVo piece = new PieceVo(type, x, y);
+	public Piece makePiece(PieceType type, int x, int y) {
+		Piece piece = new Piece(type, x, y);
 		piece.setOnMouseReleased(e -> {
 			int newX = toBoard(piece.getLayoutX());
 			int newY = toBoard(piece.getLayoutY());
@@ -151,32 +154,35 @@ public class BoardServicesImpl implements BoardServices {
 				Board.getBoard()[x0][y0].setPiece(null);
 				if (newY == 0 || newY == 7) {
 					piece.setText("K");
-					if (piece.getType().equals(PieceTypeVo.DARK)) {
-						piece.setType(PieceTypeVo.DARK_KING);
-					} else if (piece.getType().equals(PieceTypeVo.WHITE)) {
-						piece.setType(PieceTypeVo.WHITE_KING);
+					if (piece.getType().equals(PieceType.DARK)) {
+						piece.setType(PieceType.DARK_KING);
+					} else if (piece.getType().equals(PieceType.WHITE)) {
+						piece.setType(PieceType.WHITE_KING);
 					}
 				}
 				Board.getBoard()[newX][newY].setPiece(piece);
-				ai = !ai;
+				
+				Board.setAIsTurn(!Board.isAIsTurn());
+//				ai = !ai;
 				break;
 			case KILL:
 				piece.move(newX, newY);
 				Board.getBoard()[x0][y0].setPiece(null);
 				if (newY == 0 || newY == 7) {
 					piece.setText("K");
-					if (piece.getType().equals(PieceTypeVo.DARK)) {
-						piece.setType(PieceTypeVo.DARK_KING);
-					} else if (piece.getType().equals(PieceTypeVo.WHITE)) {
-						piece.setType(PieceTypeVo.WHITE_KING);
+					if (piece.getType().equals(PieceType.DARK)) {
+						piece.setType(PieceType.DARK_KING);
+					} else if (piece.getType().equals(PieceType.WHITE)) {
+						piece.setType(PieceType.WHITE_KING);
 					}
 				}
 				Board.getBoard()[newX][newY].setPiece(piece);
-				PieceVo otherPiece = result.getPiece();
+				Piece otherPiece = result.getPiece();
 				Board.getBoard()[toBoard(otherPiece.getOldX())][toBoard(otherPiece.getOldY())].setPiece(null);
 				Board.getPieceGroup().getChildren().remove(otherPiece);
 
-				ai = !ai;
+				Board.setAIsTurn(!Board.isAIsTurn());
+//				ai = !ai;
 				break;
 			}
 
@@ -185,14 +191,14 @@ public class BoardServicesImpl implements BoardServices {
 	}
 
 	@Override
-	public void saveBoard(List<PieceVo> list) {
-		Board.setSavedBoard(new TileVo[WIDTH][HEIGHT]);
+	public void saveBoard(List<Piece> list) {
+		Board.setSavedBoard(new Tile[WIDTH][HEIGHT]);
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
-				TileVo tile = new TileVo((x + y) % 2 == 0, x, y);
+				Tile tile = new Tile((x + y) % 2 == 0, x, y);
 				Board.getSavedBoard()[x][y] = tile;
 
-				for (PieceVo piecesVo : list) {
+				for (Piece piecesVo : list) {
 					if (piecesVo.getCoordX() == x && piecesVo.getCoordY() == y) {
 						Board.getSavedBoard()[x][y]
 								.setPiece(BoardServicesImpl.getInstance().makePiece(piecesVo.getType(), x, y));
@@ -206,9 +212,9 @@ public class BoardServicesImpl implements BoardServices {
 	}
 
 	@Override
-	public List<PieceVo> pieceList() {
+	public List<Piece> pieceList() {
 
-		List<PieceVo> list = new ArrayList<>();
+		List<Piece> list = new ArrayList<>();
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
 				if (Board.getBoard()[x][y].hasPiece()) {
@@ -220,29 +226,29 @@ public class BoardServicesImpl implements BoardServices {
 	}
 
 	/** ESC billentyű leütése játékban. Mentés ablak behozása. */
-	@Override
-	public void addEscape(Stage stage) {
-		stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
-			if (KeyCode.ESCAPE == event.getCode()) {
-				try {
-					Stage stage2 = new Stage();
-					Parent root = FXMLLoader.load(getClass().getResource("/fxml/SceneSaveGame.fxml"));
-					Scene scene = new Scene(root);
+//	@Override
+//	public void addEscape(Stage stage) {
+//		stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
+//			if (KeyCode.ESCAPE == event.getCode()) {
+//				try {
+//					Stage stage2 = new Stage();
+//					Parent root = FXMLLoader.load(getClass().getResource("/fxml/SceneSaveGame.fxml"));
+//					Scene scene = new Scene(root);
+//
+//					stage2.setTitle("Dámajáték");
+//					stage2.setScene(scene);
+//					stage2.setUserData(stage);//////
+//					stage2.show();
+//					// stage.close();
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
-					stage2.setTitle("Dámajáték");
-					stage2.setScene(scene);
-					stage2.setUserData(stage);//////
-					stage2.show();
-					// stage.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	private MoveResult tryMove(PieceVo piece, int newX, int newY) {
+	private MoveResult tryMove(Piece piece, int newX, int newY) {
 		if (Board.getBoard()[newX][newY].hasPiece() || (newX + newY) % 2 == 0) {
 			return new MoveResult(MoveType.NONE);
 		}
@@ -263,18 +269,18 @@ public class BoardServicesImpl implements BoardServices {
 //			}
 			
 			if (Board.getBoard()[x1][y1].hasPiece() &&
-					(	(Board.getBoard()[x1][y1].getPiece().getType().equals(PieceTypeVo.DARK))  ||
-						(Board.getBoard()[x1][y1].getPiece().getType().equals(PieceTypeVo.DARK_KING))
+					(	(Board.getBoard()[x1][y1].getPiece().getType().equals(PieceType.DARK))  ||
+						(Board.getBoard()[x1][y1].getPiece().getType().equals(PieceType.DARK_KING))
 					)
-					&&	(PieceTypeVo.DARK != piece.getType() && PieceTypeVo.DARK_KING != piece.getType())
+					&&	(PieceType.DARK != piece.getType() && PieceType.DARK_KING != piece.getType())
 			   ) 
 			{
 				return new MoveResult(MoveType.KILL, (Board.getBoard())[x1][y1].getPiece());
 			} else if (Board.getBoard()[x1][y1].hasPiece() &&
-						(	(Board.getBoard()[x1][y1].getPiece().getType().equals(PieceTypeVo.WHITE))  ||
-							(Board.getBoard()[x1][y1].getPiece().getType().equals(PieceTypeVo.WHITE_KING))
+						(	(Board.getBoard()[x1][y1].getPiece().getType().equals(PieceType.WHITE))  ||
+							(Board.getBoard()[x1][y1].getPiece().getType().equals(PieceType.WHITE_KING))
 						)
-						&&	(PieceTypeVo.WHITE != piece.getType() && PieceTypeVo.WHITE_KING != piece.getType())
+						&&	(PieceType.WHITE != piece.getType() && PieceType.WHITE_KING != piece.getType())
 					  ) 
 			{
 				return new MoveResult(MoveType.KILL, (Board.getBoard())[x1][y1].getPiece());
@@ -282,7 +288,7 @@ public class BoardServicesImpl implements BoardServices {
 			
 		}
 		// ************
-		else if (piece.getType().equals(PieceTypeVo.DARK_KING) || piece.getType().equals(PieceTypeVo.WHITE_KING)) {
+		else if (piece.getType().equals(PieceType.DARK_KING) || piece.getType().equals(PieceType.WHITE_KING)) {
 			if (Math.abs(newX - x0) == 1 && (newY - y0 == -1 || newY - y0 == 1)) {
 				return new MoveResult(MoveType.NORMAL);
 			} else if (Math.abs(newX - x0) == 2 && (newY - y0 == -1 * 2 || newY - y0 == 1 * 2)) {
@@ -295,18 +301,18 @@ public class BoardServicesImpl implements BoardServices {
 				// return new MoveResult(MoveType.KILL, (Board.getBoard())[x1][y1].getPiece());
 				// }
 				if (Board.getBoard()[x1][y1].hasPiece() &&
-						(	(Board.getBoard()[x1][y1].getPiece().getType().equals(PieceTypeVo.DARK))  ||
-							(Board.getBoard()[x1][y1].getPiece().getType().equals(PieceTypeVo.DARK_KING))
+						(	(Board.getBoard()[x1][y1].getPiece().getType().equals(PieceType.DARK))  ||
+							(Board.getBoard()[x1][y1].getPiece().getType().equals(PieceType.DARK_KING))
 						)
-						&&	(PieceTypeVo.DARK != piece.getType() && PieceTypeVo.DARK_KING != piece.getType())
+						&&	(PieceType.DARK != piece.getType() && PieceType.DARK_KING != piece.getType())
 				   ) 
 				{
 					return new MoveResult(MoveType.KILL, (Board.getBoard())[x1][y1].getPiece());
 				} else if (Board.getBoard()[x1][y1].hasPiece() &&
-							(	(Board.getBoard()[x1][y1].getPiece().getType().equals(PieceTypeVo.WHITE))  ||
-								(Board.getBoard()[x1][y1].getPiece().getType().equals(PieceTypeVo.WHITE_KING))
+							(	(Board.getBoard()[x1][y1].getPiece().getType().equals(PieceType.WHITE))  ||
+								(Board.getBoard()[x1][y1].getPiece().getType().equals(PieceType.WHITE_KING))
 							)
-							&&	(PieceTypeVo.WHITE != piece.getType() && PieceTypeVo.WHITE_KING != piece.getType())
+							&&	(PieceType.WHITE != piece.getType() && PieceType.WHITE_KING != piece.getType())
 						  ) 
 				{
 					return new MoveResult(MoveType.KILL, (Board.getBoard())[x1][y1].getPiece());
@@ -323,18 +329,18 @@ public class BoardServicesImpl implements BoardServices {
 		return (int) (pixel + TILE_SIZE / 2) / TILE_SIZE;
 	}
 
-	public void checkEndGame(TileVo[][] board) {
+	public void checkEndGame(Tile[][] board) {
 		int dark = 0;
 		int white = 0;
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
 				if(board[x][y].hasPiece() && 
-						( board[x][y].getPiece().getType().equals(PieceTypeVo.DARK) 
-								|| board[x][y].getPiece().getType().equals(PieceTypeVo.DARK_KING))) {
+						( board[x][y].getPiece().getType().equals(PieceType.DARK) 
+								|| board[x][y].getPiece().getType().equals(PieceType.DARK_KING))) {
 					dark++;
 				} else if(board[x][y].hasPiece() && 
-						( board[x][y].getPiece().getType().equals(PieceTypeVo.WHITE) 
-								|| board[x][y].getPiece().getType().equals(PieceTypeVo.WHITE_KING))) {
+						( board[x][y].getPiece().getType().equals(PieceType.WHITE) 
+								|| board[x][y].getPiece().getType().equals(PieceType.WHITE_KING))) {
 					white++;
 				}
 			}
@@ -371,13 +377,13 @@ public class BoardServicesImpl implements BoardServices {
 
 	public void aImove() {
 
-		PieceVo currentPiece = null;
-		List<PieceVo> listToShuffleWithPieces = new ArrayList<>();
+		Piece currentPiece = null;
+		List<Piece> listToShuffleWithPieces = new ArrayList<>();
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < WIDTH; j++) {
 				if (Board.getBoard()[j][i].hasPiece()
-						&& (Board.getBoard()[j][i].getPiece().getType().equals(PieceTypeVo.DARK)
-								|| Board.getBoard()[j][i].getPiece().getType().equals(PieceTypeVo.DARK_KING))) {
+						&& (Board.getBoard()[j][i].getPiece().getType().equals(PieceType.DARK)
+								|| Board.getBoard()[j][i].getPiece().getType().equals(PieceType.DARK_KING))) {
 					listToShuffleWithPieces.add(Board.getBoard()[j][i].getPiece());
 				}
 			}
@@ -388,7 +394,7 @@ public class BoardServicesImpl implements BoardServices {
 		for (int a = 0; a < listToShuffleWithPieces.size(); a++) {
 
 			currentPiece = listToShuffleWithPieces.get(a);
-			PieceVo piece = Board.getBoard()[currentPiece.getCoordX()][currentPiece.getCoordY()].getPiece();
+			Piece piece = Board.getBoard()[currentPiece.getCoordX()][currentPiece.getCoordY()].getPiece();
 			// System.out.println(""+currentPiece.getType() + currentPiece.getCoordX() +
 			// currentPiece.getCoordY()+ " list size: "+listToShuffleWithPieces.size());
 			// MOUSE
@@ -418,14 +424,16 @@ public class BoardServicesImpl implements BoardServices {
 						Board.getBoard()[x0][y0].setPiece(null);
 						if (newY == 0 || newY == 7) {
 							piece.setText("K");
-							if (piece.getType().equals(PieceTypeVo.DARK)) {
-								piece.setType(PieceTypeVo.DARK_KING);
-							} else if (piece.getType().equals(PieceTypeVo.WHITE)) {
-								piece.setType(PieceTypeVo.WHITE_KING);
+							if (piece.getType().equals(PieceType.DARK)) {
+								piece.setType(PieceType.DARK_KING);
+							} else if (piece.getType().equals(PieceType.WHITE)) {
+								piece.setType(PieceType.WHITE_KING);
 							}
 						}
 						Board.getBoard()[newX][newY].setPiece(piece);
-						ai = !ai;
+						
+						Board.setAIsTurn(!Board.isAIsTurn());
+//						ai = !ai;
 						movedPiece++;
 						break;
 					case KILL:
@@ -433,17 +441,19 @@ public class BoardServicesImpl implements BoardServices {
 						Board.getBoard()[x0][y0].setPiece(null);
 						if (newY == 0 || newY == 7) {
 							piece.setText("K");
-							if (piece.getType().equals(PieceTypeVo.DARK)) {
-								piece.setType(PieceTypeVo.DARK_KING);
-							} else if (piece.getType().equals(PieceTypeVo.WHITE)) {
-								piece.setType(PieceTypeVo.WHITE_KING);
+							if (piece.getType().equals(PieceType.DARK)) {
+								piece.setType(PieceType.DARK_KING);
+							} else if (piece.getType().equals(PieceType.WHITE)) {
+								piece.setType(PieceType.WHITE_KING);
 							}
 						}
 						Board.getBoard()[newX][newY].setPiece(piece);
-						PieceVo otherPiece = result.getPiece();
+						Piece otherPiece = result.getPiece();
 						Board.getBoard()[toBoard(otherPiece.getOldX())][toBoard(otherPiece.getOldY())].setPiece(null);
 						Board.getPieceGroup().getChildren().remove(otherPiece);
-						ai = !ai;
+						
+						Board.setAIsTurn(!Board.isAIsTurn());
+//						ai = !ai;
 						movedPiece++;
 						break;
 					}
@@ -457,14 +467,14 @@ public class BoardServicesImpl implements BoardServices {
 		}
 	}
 
-	public void addSpace(Stage stage) {
-		stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
-			if (KeyCode.SPACE == event.getCode()) {
-				checkEndGame(Board.getBoard());
-				if (ai) {
-					aImove();
-				}
-			}
-		});
-	}
+//	public void addSpace(Stage stage) {
+//		stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
+//			if (KeyCode.SPACE == event.getCode()) {
+//				checkEndGame(Board.getBoard());
+//				if (Board.isAIsTurn()) {
+//					aImove();
+//				}
+//			}
+//		});
+//	}
 }

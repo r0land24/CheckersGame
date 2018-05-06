@@ -28,7 +28,8 @@ public class MainApp extends Application {
 	/**
 	 * A program main függvénye.
 	 *
-	 * @param  args  a parancssori argumentumok
+	 * @param args
+	 *            a parancssori argumentumok
 	 */
 	public static void main(String[] args) {
 		launch(args);

@@ -14,6 +14,7 @@ public class Board {
 	public static final int HEIGHT = 8;
 
 	private static boolean aisTurn = false;
+	private static String winner = null;
 	private static Tile[][] board = null;
 	private static Tile[][] savedBoard = null; //new TileVo[WIDTH][HEIGHT];
 	private static Group tileGroup = null;
@@ -60,5 +61,15 @@ public class Board {
 	public static void setAIsTurn(boolean aisTurn) {
 		Board.aisTurn = aisTurn;
 	}
+
+	public static String getWinner() {
+		return winner;
+	}
+
+	public static void setWinner(String winner) {
+		Board.winner = winner;
+	}
+	
+	
 
 }

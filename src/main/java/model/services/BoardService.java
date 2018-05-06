@@ -38,7 +38,7 @@ public class BoardService {
 		return firstInstance;
 	}
 
-	/** Feltölti a és feltölti a korongokkal. */
+	/* Feltölti a és feltölti a korongokkal. */
 	public Parent createContent() {
 		Board.setBoard(new Tile[WIDTH][HEIGHT]);
 		Board.setTileGroup(new Group());
@@ -76,7 +76,7 @@ public class BoardService {
 		return root;
 	}
 
-	/**
+	/*
 	 * boardAttr elemei alapján létrehozza az új táblát, frissül a static board
 	 * tábla
 	 */
@@ -125,6 +125,7 @@ public class BoardService {
 	 *            az x koordináta
 	 * @param y
 	 *            az y koordináta
+	 * @return létrejött koron
 	 */
 	public Piece makePiece(PieceType type, int x, int y) {
 		Piece piece = new Piece(type, x, y);
@@ -186,7 +187,7 @@ public class BoardService {
 		return piece;
 	}
 
-	private MoveResult tryMove(Piece piece, int newX, int newY) {
+	public MoveResult tryMove(Piece piece, int newX, int newY) {
 		if (Board.getBoard()[newX][newY].hasPiece() || (newX + newY) % 2 == 0) {
 			return new MoveResult(MoveType.NONE);
 		}

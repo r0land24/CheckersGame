@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="165.0" prefWidth="337.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLMainMenu">
     <children>
-        <Button id="newGame" fx:id="newGameButton" layoutX="141.0" layoutY="56.0" onAction="#actionNewGame" text="Új játék" />
+        <Button id="newGame" fx:id="newGameButton" layoutX="134.0" layoutY="57.0" onAction="#actionNewGame" text="Új játék" />
       <Text layoutX="116.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dámajáték">
          <font>
             <Font name="System Bold" size="21.0" />

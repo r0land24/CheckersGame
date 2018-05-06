@@ -16,9 +16,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import model.vo.Board;
 
 /**
- * Osztály a játé végi ablak kezelésére.
+ * Osztály a játék vége ablak kezelésére.
  */
 public class FXMLEnd implements Initializable {
 
@@ -48,12 +49,11 @@ public class FXMLEnd implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		Stage stage = new Stage();
-		String winner = "" + stage.getUserData();
-		if (winner == "white") {
+		String winner = Board.getWinner();
+		if (winner.contains("white")) {
 			endLabelWhite.setVisible(true);
 			logger.info("Játék vége, világos nyert");
-		} else {
+		} else if (winner.contains("dark")){
 			endLabelDark.setVisible(true);
 			logger.info("Játék vége, sötét nyert");
 		}

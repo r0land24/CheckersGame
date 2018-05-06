@@ -69,7 +69,7 @@ public class BoardUtilsService {
 	}
 
 	// játék végének csekkolása
-	public void checkEndGame(Tile[][] board) {
+	public boolean checkEndGame(Tile[][] board) {
 		int dark = 0;
 		int white = 0;
 		for (int y = 0; y < HEIGHT; y++) {
@@ -84,6 +84,11 @@ public class BoardUtilsService {
 			}
 		}
 		if (dark == 0 || white == 0) {
+			if (dark == 0)
+				Board.setWinner("white"); //0 sötét van ezért a világos nyer
+			else if (white == 0)
+				Board.setWinner("dark"); //0 világos van ezért a sötét nyer
+			
 			Stage stage = (Stage) board[0][0].getScene().getWindow();
 			Stage stage2 = new Stage();
 			Parent root = new Parent() {
@@ -99,14 +104,12 @@ public class BoardUtilsService {
 
 			stage2.setTitle("Dámajáték");
 			stage2.setScene(scene);
-			if (dark == 0)
-				stage2.setUserData("white");
-			else if (white == 0)
-				stage2.setUserData("dark");
+			
 			stage2.show();
 			stage.close();
-
+			return true;
 		}
+		return false;
 
 	}
 

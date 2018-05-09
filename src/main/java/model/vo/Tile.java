@@ -8,19 +8,7 @@ import javafx.scene.shape.Rectangle;
 public class Tile extends Rectangle {
 
 	private Piece piece;
-
-	public boolean hasPiece() {
-		return piece != null;
-	}
-
-	public Piece getPiece() {
-		return piece;
-	}
-
-	public void setPiece(Piece piece) {
-		this.piece = piece;
-	}
-
+	
 	/**
 	 * Tile! a sakktábla egy kockája, light! alapján setFillel beállítjuk a kocka
 	 * színét, x! és y! a relocatehez(rajzoláshoz) kell, amik amúgy tábla
@@ -35,4 +23,17 @@ public class Tile extends Rectangle {
 		setFill(light ? Color.GOLD : Color.BROWN);
 
 	}
+
+	public boolean hasPiece() {
+		return piece != null;
+	}
+
+	public Piece getPiece() {
+		return piece;
+	}
+
+	public void setPiece(Piece piece) {
+		this.piece = piece;
+	}
+
 }

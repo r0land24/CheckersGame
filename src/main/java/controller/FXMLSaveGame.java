@@ -15,8 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import model.dom.Dom;
-import model.dom.DomImpl;
+import model.dao.Dom;
 import model.services.BoardUtilsService;
 import model.vo.Board;
 
@@ -34,7 +33,7 @@ public class FXMLSaveGame implements Initializable {
 	private void actionSave(ActionEvent event) {
 		try {
 			// XML feltöltése a konrongok típusával, helyzetével és hogy hol tart a kör
-			Dom dom = new DomImpl();
+			Dom dom = new Dom();
 			dom.domWriter(BoardUtilsService.getInstance().pieceList(), Board.isAIsTurn());
 
 			logger.info("Mentés történt XML-be");

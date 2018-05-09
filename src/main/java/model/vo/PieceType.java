@@ -5,7 +5,7 @@ public enum PieceType {
 
 	public final int moveDir; // sötét lefele mehet, világos csak felfele, 0-ra KING-re vonatkozó feltétel áll fönn majd, azaz bármerre mehet
 
-	PieceType(int moveDirection) {
+	private PieceType(int moveDirection) {
 		this.moveDir = moveDirection;
 	}
 }

@@ -18,6 +18,9 @@ import model.vo.Piece;
 import model.vo.PieceType;
 import model.vo.Tile;
 
+/**
+ * Minden olyan service ami a táblával csinál valamit.
+ */
 public class BoardService {
 
 	private static BoardService firstInstance = null;
@@ -38,7 +41,11 @@ public class BoardService {
 		return firstInstance;
 	}
 
-	/* Feltölti a és feltölti a korongokkal. */
+	/**
+	 * Létrehoz egy új táblát.
+	 * 
+	 * @return Stage a tábláról
+	 */
 	public Parent createContent() {
 		Board.setBoard(new Tile[WIDTH][HEIGHT]);
 		Board.setTileGroup(new Group());
@@ -71,14 +78,15 @@ public class BoardService {
 				}
 			}
 		}
-		// (new ThreadWhile()).start();
-		// (new ThreadWhile()).run();
 		return root;
 	}
 
-	/*
-	 * boardAttr elemei alapján létrehozza az új táblát, frissül a static board
-	 * tábla
+	/**
+	 * Létrehoz egy új táblát a mentett táblából.
+	 * 
+	 * @param savedBoard
+	 *            lementett tábla
+	 * @return Stage a tábláról
 	 */
 	public Parent createContent(Tile[][] savedBoard) {
 		Board.setBoard(new Tile[WIDTH][HEIGHT]);
@@ -187,6 +195,17 @@ public class BoardService {
 		return piece;
 	}
 
+	/**
+	 * Megnézi, hogy mozgatható-e a korong.
+	 * 
+	 * @param piece
+	 *            korong
+	 * @param newX
+	 *            új x paraméter
+	 * @param newY
+	 *            új y paraméter
+	 * @return mozgás eredménye
+	 */
 	public MoveResult tryMove(Piece piece, int newX, int newY) {
 		if (Board.getBoard()[newX][newY].hasPiece() || (newX + newY) % 2 == 0) {
 			return new MoveResult(MoveType.NONE);
@@ -199,11 +218,16 @@ public class BoardService {
 
 	}
 
+	/**
+	 * .
+	 */
 	private int toBoard(double pixel) {
 		return (int) (pixel + TILE_SIZE / 2) / TILE_SIZE;
 	}
 
-	// a gép lépésének logikája és konkrét lépése
+	/**
+	 * Az AI egy lépését szimulálja.
+	 */
 	public void aImove() {
 
 		Piece currentPiece = null;
@@ -282,8 +306,11 @@ public class BoardService {
 					if (movedPiece > 0)
 						return;
 				}
-				if (movedPiece > 0)
-					break;
+				// if (movedPiece > 0)
+				// break;
+			}
+			if (a == listToShuffleWithPieces.size()-1 && movedPiece == 0) {
+				BoardUtilsService.getInstance().checkEndGame(Board.getBoard(), true);
 			}
 		}
 	}

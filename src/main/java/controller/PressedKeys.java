@@ -30,7 +30,7 @@ public class PressedKeys {
 	public void addSpace(Stage stage) {
 		stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
 			if (KeyCode.SPACE == event.getCode()) {
-				BoardUtilsService.getInstance().checkEndGame(Board.getBoard());
+				BoardUtilsService.getInstance().checkEndGame(Board.getBoard(), false);
 				if (Board.isAIsTurn()) {
 					BoardService.getInstance().aImove();
 				}

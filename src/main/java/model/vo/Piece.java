@@ -14,73 +14,8 @@ public class Piece extends StackPane {
 	private double oldX, oldY; // a korong konkrét helye * tilesize = megrajzolt tile
 	private int coordX;
 	private int coordY;
-
-	public int getCoordX() {
-		return coordX;
-	}
-
-	public void setCoordX(int coordX) {
-		this.coordX = coordX;
-	}
-
-	public int getCoordY() {
-		return coordY;
-	}
-
-	public void setCoordY(int coordY) {
-		this.coordY = coordY;
-	}
-
 	private PieceType type;
-
-	public Text getText() {
-		return text;
-	}
-
-	public void setText(String string) {
-		this.text.setText(string);
-	}
-
-	public double getMouseX() {
-		return mouseX;
-	}
-
-	public void setMouseX(double mouseX) {
-		this.mouseX = mouseX;
-	}
-
-	public double getMouseY() {
-		return mouseY;
-	}
-
-	public void setMouseY(double mouseY) {
-		this.mouseY = mouseY;
-	}
-
-	public double getOldX() {
-		return oldX;
-	}
-
-	public void setOldX(double oldX) {
-		this.oldX = oldX;
-	}
-
-	public double getOldY() {
-		return oldY;
-	}
-
-	public void setOldY(double oldY) {
-		this.oldY = oldY;
-	}
-
-	public PieceType getType() {
-		return type;
-	}
-
-	public void setType(PieceType type) {
-		this.type = type;
-	}
-
+	
 	public Piece() {
 
 	}
@@ -108,7 +43,7 @@ public class Piece extends StackPane {
 		text.setStroke(Color.BLACK);
 		text.setStrokeWidth(TILE_SIZE * 0.1);
 
-		//for 2 players
+		// for 2 players
 		// setOnMousePressed(e -> {
 		// System.out.println(((PieceVo) e.getSource()).getType());
 		// mouseX = e.getSceneX();
@@ -150,6 +85,70 @@ public class Piece extends StackPane {
 			}
 		});
 
+	}
+
+	/**
+	 * Az X koordinátát adja vissza.
+	 * 
+	 * @return az X koordináta
+	 */
+	public int getCoordX() {
+		return coordX;
+	}
+
+	/**
+	 * Az X koordinátát állítja be.
+	 */
+	public void setCoordX(int coordX) {
+		this.coordX = coordX;
+	}
+
+	/**
+	 * Az Y koordinátát adja vissza.
+	 * 
+	 * @return az Y koordináta
+	 */
+	public int getCoordY() {
+		return coordY;
+	}
+
+	/**
+	 * Az Y koordinátát állítja be.
+	 */
+	public void setCoordY(int coordY) {
+		this.coordY = coordY;
+	}
+
+	/**
+	 * Visszaadja a szöveget.
+	 * 
+	 * @return a szöveg
+	 */
+	public Text getText() {
+		return text;
+	}
+
+	/**
+	 * Beállítja a szöveget.
+	 */
+	public void setText(String string) {
+		this.text.setText(string);
+	}
+
+	public double getOldX() {
+		return oldX;
+	}
+
+	public double getOldY() {
+		return oldY;
+	}
+
+	public PieceType getType() {
+		return type;
+	}
+
+	public void setType(PieceType type) {
+		this.type = type;
 	}
 
 	public void move(int x, int y) {

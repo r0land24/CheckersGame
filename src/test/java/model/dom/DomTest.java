@@ -8,8 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import model.dom.Dom;
-import model.dom.DomImpl;
+import model.dao.Dom;
 import model.services.BoardService;
 import model.services.BoardUtilsService;
 import model.vo.Board;
@@ -24,7 +23,7 @@ public class DomTest {
 	@Test
 	public void domTest() {
 		BoardService.getInstance().createContent();
-		Dom dom = new DomImpl();
+		Dom dom = new Dom();
 		List<Piece> list = BoardUtilsService.getInstance().pieceList();
 		boolean aisTurn = Board.isAIsTurn();
 		dom.domWriter(list, aisTurn);
@@ -32,7 +31,13 @@ public class DomTest {
 		assertEquals(24, pieces.size());
 		boolean ai = dom.domAiReader();
 		assertFalse(ai);
-		File xmlFile = new File("savedGame.xml");
+
+		File xmlFile = null;
+		if (dom.osName.contains("windows")) {
+			xmlFile = new File(dom.windowsFilePath);
+		} else if (dom.osName.contains("linux") || dom.osName.contains("unix")) {
+			xmlFile = new File(dom.linuxFilePath);
+		}
 		xmlFile.delete();
 
 	}

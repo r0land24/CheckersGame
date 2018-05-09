@@ -12,8 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import model.dom.Dom;
-import model.dom.DomImpl;
+import model.dao.Dom;
 import model.services.BoardService;
 import model.services.BoardUtilsService;
 import model.vo.Board;
@@ -51,7 +50,7 @@ public class FXMLMainMenu implements Initializable {
 		Stage stage = (Stage) loadGameButton.getScene().getWindow();
 
 		// XML adatok feldolgozása
-		Dom dom = new DomImpl();
+		Dom dom = new Dom();
 		BoardService service = BoardService.getInstance();
 		BoardUtilsService utilsService = BoardUtilsService.getInstance();
 		utilsService.saveBoard(dom.domPieceReader());
@@ -72,7 +71,7 @@ public class FXMLMainMenu implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		Dom dom = new DomImpl();
+		Dom dom = new Dom();
 		if (null == dom.domPieceReader())
 			loadGameButton.setDisable(true);
 		else

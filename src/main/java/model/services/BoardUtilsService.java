@@ -18,6 +18,9 @@ import model.vo.Piece;
 import model.vo.PieceType;
 import model.vo.Tile;
 
+/**
+ * Minden olyan service ami.
+ */
 public class BoardUtilsService {
 
 	private static BoardUtilsService firstInstance = null;
@@ -37,6 +40,13 @@ public class BoardUtilsService {
 		return firstInstance;
 	}
 
+	/**
+	 * Egy mentett táblát készít a korongok egy listája alapján.
+	 * 
+	 * @param list
+	 *            a korongok listája
+	 * 
+	 */
 	public void saveBoard(List<Piece> list) {
 		Board.setSavedBoard(new Tile[WIDTH][HEIGHT]);
 		for (int y = 0; y < HEIGHT; y++) {
@@ -54,7 +64,11 @@ public class BoardUtilsService {
 		}
 	}
 
-	// a táblán lévő korongok listáját adja vissza
+	/**
+	 * A táblán lévő korongokat listába szedő metódus.
+	 * 
+	 * @return lista a korongokról
+	 */
 	public List<Piece> pieceList() {
 
 		List<Piece> list = new ArrayList<>();
@@ -68,8 +82,13 @@ public class BoardUtilsService {
 		return list;
 	}
 
-	// játék végének csekkolása
-	public boolean checkEndGame(Tile[][] board) {
+	/**
+	 * Leellenőrzi, hogy véget ért-e a játék.
+	 * 
+	 * @param board tábla amit megvizsgál a metódus
+	 * @return játék vége
+	 */
+	public boolean checkEndGame(Tile[][] board, boolean cantMove) {
 		int dark = 0;
 		int white = 0;
 		for (int y = 0; y < HEIGHT; y++) {
@@ -83,12 +102,12 @@ public class BoardUtilsService {
 				}
 			}
 		}
-		if (dark == 0 || white == 0) {
-			if (dark == 0)
-				Board.setWinner("white"); //0 sötét van ezért a világos nyer
+		if (cantMove || dark == 0 || white == 0) {
+			if (dark == 0 || cantMove)
+				Board.setWinner("white"); // 0 sötét van ezért a világos nyer
 			else if (white == 0)
-				Board.setWinner("dark"); //0 világos van ezért a sötét nyer
-			
+				Board.setWinner("dark"); // 0 világos van ezért a sötét nyer
+
 			Stage stage = (Stage) board[0][0].getScene().getWindow();
 			Stage stage2 = new Stage();
 			Parent root = new Parent() {
@@ -104,7 +123,7 @@ public class BoardUtilsService {
 
 			stage2.setTitle("Dámajáték");
 			stage2.setScene(scene);
-			
+
 			stage2.show();
 			stage.close();
 			return true;
@@ -113,6 +132,16 @@ public class BoardUtilsService {
 
 	}
 
+	/**
+	 * A korongok mozgását kiszámoló logika.
+	 * 
+	 * @param piece a korong
+	 * @param newX új x paraméter
+	 * @param newY új x paraméter
+	 * @param x0 
+	 * @param y0
+	 * @return a mozgatás eredménye
+	 */
 	public MoveResult moveResultLogic(Piece piece, int newX, int newY, int x0, int y0) {
 		if (Math.abs(newX - x0) == 1 && newY - y0 == piece.getType().moveDir) {
 

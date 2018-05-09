@@ -40,7 +40,7 @@ public class BoardUtilsServiceTest {
 	@Test
 	public void testCheckEndGame() {
 		BoardService.getInstance().createContent();
-		boolean check = BoardUtilsService.getInstance().checkEndGame(Board.getBoard());
+		boolean check = BoardUtilsService.getInstance().checkEndGame(Board.getBoard(),false);
 		assertFalse(check);
 
 	}

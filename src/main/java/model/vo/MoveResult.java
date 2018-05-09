@@ -3,17 +3,8 @@ package model.vo;
 public class MoveResult {
 
 	private MoveType type;
-
-	public MoveType getType() {
-		return type;
-	}
-
 	private Piece piece;
-
-	public Piece getPiece() {
-		return piece;
-	}
-
+	
 	public MoveResult(MoveType type) {
 		this(type, null);
 	}
@@ -22,4 +13,13 @@ public class MoveResult {
 		this.type = type;
 		this.piece = piece;
 	}
+
+	public MoveType getType() {
+		return type;
+	}
+
+	public Piece getPiece() {
+		return piece;
+	}
+
 }

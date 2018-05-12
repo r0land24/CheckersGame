@@ -17,9 +17,9 @@ import model.vo.Piece;
 import model.vo.PieceType;
 import model.vo.Tile;
 
-public class BoardServicesTest {
+public class BoardServiceTest {
 
-	public BoardServicesTest() {
+	public BoardServiceTest() {
 
 	}
 

@@ -13,9 +13,9 @@ import model.vo.Board;
 import model.vo.Piece;
 import model.vo.PieceType;
 
-public class BoardUtilsServiceTest {
+public class BoardUtilServiceTest {
 
-	public BoardUtilsServiceTest() {
+	public BoardUtilServiceTest() {
 
 	}
 
@@ -27,20 +27,20 @@ public class BoardUtilsServiceTest {
 		list.add(new Piece(PieceType.WHITE_KING, 1, 1));
 		list.add(new Piece(PieceType.WHITE, 2, 2));
 		list.add(new Piece(PieceType.DARK, 3, 3));
-		BoardUtilsService.getInstance().saveBoard(list);
+		BoardUtilService.getInstance().saveBoard(list);
 		assertNotNull(Board.getSavedBoard());
 	}
 
 	@Test
 	public void testPieceList() {
 		BoardService.getInstance().createContent();
-		assertEquals(24, BoardUtilsService.getInstance().pieceList().size());
+		assertEquals(24, BoardUtilService.getInstance().pieceList().size());
 	}
 
 	@Test
 	public void testCheckEndGame() {
 		BoardService.getInstance().createContent();
-		boolean check = BoardUtilsService.getInstance().checkEndGame(Board.getBoard(),false);
+		boolean check = BoardUtilService.getInstance().checkEndGame(Board.getBoard(),false);
 		assertFalse(check);
 
 	}

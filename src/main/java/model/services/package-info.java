@@ -1,4 +1,4 @@
 /**
- * Csomag, ami a model service osztályait tartalmazza.
+ * Az üzleti logikát végző (service) osztályokat tartalmazó csomag.
  */
 package model.services;

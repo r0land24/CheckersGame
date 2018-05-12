@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import controller.util.PressedKeys;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,11 +15,13 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import model.dao.Dom;
 import model.services.BoardService;
-import model.services.BoardUtilsService;
+import model.services.BoardUtilService;
 import model.vo.Board;
 
 /**
- * Osztály a főmenü kezelésére.
+ * Az {@code FXMLMainMenu} osztály a főmenüt kezeli.
+ * 
+ * @author roland
  */
 public class FXMLMainMenu implements Initializable {
 
@@ -38,7 +41,7 @@ public class FXMLMainMenu implements Initializable {
 		key.addSpace(stage); // space gombnyomásra akció
 		key.addEscape(stage); // escape gombnyomásra akció
 
-		logger.info("Új játék elindult");
+		logger.info("Új játék elindult!");
 
 		stage.setTitle("Dámajáték - új játék");
 		stage.setScene(scene);
@@ -52,7 +55,7 @@ public class FXMLMainMenu implements Initializable {
 		// XML adatok feldolgozása
 		Dom dom = new Dom();
 		BoardService service = BoardService.getInstance();
-		BoardUtilsService utilsService = BoardUtilsService.getInstance();
+		BoardUtilService utilsService = BoardUtilService.getInstance();
 		utilsService.saveBoard(dom.domPieceReader());
 		Board.setAIsTurn(dom.domAiReader());
 
@@ -62,7 +65,7 @@ public class FXMLMainMenu implements Initializable {
 		key.addSpace(stage);
 		key.addEscape(stage);
 
-		logger.info("Betöltődött a mentés, játék elindult");
+		logger.info("Betöltődött a mentés, játék elindult!");
 
 		stage.setTitle("Dámajáték - mentett játék");
 		stage.setScene(scene);

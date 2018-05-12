@@ -1,5 +1,17 @@
 package model.vo;
 
+/**
+ * {@code MoveType} osztály a mozgás típusait reprezentálja.
+ * 
+ * @author roland
+ */
 public enum MoveType {
-	NONE, NORMAL, KILL
+	/** Nincs lépés. */
+	NONE,
+
+	/** Normál lépés. */
+	NORMAL,
+
+	/** Korongot leütő lépés. */
+	KILL
 }

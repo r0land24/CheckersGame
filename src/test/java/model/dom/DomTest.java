@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import model.dao.Dom;
 import model.services.BoardService;
-import model.services.BoardUtilsService;
+import model.services.BoardUtilService;
 import model.vo.Board;
 import model.vo.Piece;
 
@@ -24,7 +24,7 @@ public class DomTest {
 	public void domTest() {
 		BoardService.getInstance().createContent();
 		Dom dom = new Dom();
-		List<Piece> list = BoardUtilsService.getInstance().pieceList();
+		List<Piece> list = BoardUtilService.getInstance().pieceList();
 		boolean aisTurn = Board.isAIsTurn();
 		dom.domWriter(list, aisTurn);
 		List<Piece> pieces = dom.domPieceReader();
@@ -32,13 +32,10 @@ public class DomTest {
 		boolean ai = dom.domAiReader();
 		assertFalse(ai);
 
-		File xmlFile = null;
-		if (dom.osName.contains("windows")) {
-			xmlFile = new File(dom.windowsFilePath);
-		} else if (dom.osName.contains("linux") || dom.osName.contains("unix")) {
-			xmlFile = new File(dom.linuxFilePath);
-		}
+		File xmlFolder = new File (dom.userHome + File.separator + "CheckersGame");
+		File xmlFile = new File(dom.userHome + File.separator + "CheckersGame" + File.separator + "chekersSavedGame.xml");
 		xmlFile.delete();
+		xmlFolder.delete();
 
 	}
 

@@ -1,4 +1,4 @@
 /**
- * Csomag, ami a controller osztályait tartalmazza.
+ * A menü és felugró ablakok kezelését végző osztályokat tartalmazó csomag.
  */
 package controller;

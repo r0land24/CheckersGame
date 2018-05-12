@@ -1,4 +1,4 @@
 /**
- * Ez a package felelős az xml fájlba való mentésért és olvasásért.
+ * Az xml fájlba való írás és olvasásért felelős osztályt tartalmazó csomag.
  */
 package model.dao;

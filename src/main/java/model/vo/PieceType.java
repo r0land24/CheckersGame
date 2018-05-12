@@ -1,9 +1,29 @@
 package model.vo;
 
+/**
+ * {@code PieceType} osztály a korongok típusát reprezentálja.
+ * 
+ * @author roland
+ */
 public enum PieceType {
-	WHITE(-1), WHITE_KING(0), DARK(1), DARK_KING(0);
+	/** Világos korong. */
+	WHITE(-1),
 
-	public final int moveDir; // sötét lefele mehet, világos csak felfele, 0-ra KING-re vonatkozó feltétel áll fönn majd, azaz bármerre mehet
+	/** Világos király korong, magyarul dáma a helyes megnevezése. */
+	WHITE_KING(0),
+
+	/** Sötét korong. */
+	DARK(1),
+
+	/** Sötét király korong, magyarul dáma a helyes megnevezése. */
+	DARK_KING(0);
+
+	/**
+	 * Mozgási irány, -1 esetén lefele, +1 esetén fölfele mozoghat a korong, 0-ra
+	 * külön feltétel vonatkozik, azaz fölfele és lefele is mozoghat.
+	 * 
+	 */
+	public final int moveDir;
 
 	private PieceType(int moveDirection) {
 		this.moveDir = moveDirection;

@@ -7,19 +7,38 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
+/**
+ * A {@code Piece} osztály a korongot reprezentálja.
+ * 
+ * @author roland
+ */
 public class Piece extends StackPane {
 
 	private Text text = new Text("");
+
 	private double mouseX, mouseY;
+
 	private double oldX, oldY; // a korong konkrét helye * tilesize = megrajzolt tile
+
 	private int coordX;
+
 	private int coordY;
+
 	private PieceType type;
-	
+
+	/**
+	 * A {@code Piece} osztály paraméter nélküli konstruktora.
+	 */
 	public Piece() {
 
 	}
 
+	/**
+	 * A {@code Piece} osztály konstruktora, inicializálja a {@code type}
+	 * adattagot.
+	 * 
+	 * @param type a mozgás típusa
+	 */
 	public Piece(PieceType type, int x, int y) {
 		this.type = type;
 
@@ -88,7 +107,7 @@ public class Piece extends StackPane {
 	}
 
 	/**
-	 * Az X koordinátát adja vissza.
+	 * Megadja az X koordinátát.
 	 * 
 	 * @return az X koordináta
 	 */
@@ -96,15 +115,13 @@ public class Piece extends StackPane {
 		return coordX;
 	}
 
-	/**
-	 * Az X koordinátát állítja be.
-	 */
+	/** Beállítja az X koordinátát. */
 	public void setCoordX(int coordX) {
 		this.coordX = coordX;
 	}
 
 	/**
-	 * Az Y koordinátát adja vissza.
+	 * Megadja az Y koordinátát.
 	 * 
 	 * @return az Y koordináta
 	 */
@@ -112,9 +129,7 @@ public class Piece extends StackPane {
 		return coordY;
 	}
 
-	/**
-	 * Az Y koordinátát állítja be.
-	 */
+	/** Beállítja az X koordinátát. */
 	public void setCoordY(int coordY) {
 		this.coordY = coordY;
 	}

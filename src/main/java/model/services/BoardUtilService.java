@@ -3,14 +3,10 @@ package model.services;
 import static model.vo.Board.HEIGHT;
 import static model.vo.Board.WIDTH;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import controller.util.EndPopUpLoader;
 import model.vo.Board;
 import model.vo.MoveResult;
 import model.vo.MoveType;
@@ -19,23 +15,25 @@ import model.vo.PieceType;
 import model.vo.Tile;
 
 /**
- * Minden olyan service ami.
+ * {@code BoardUtilService} osztály a tábla logikáját (servicek) tartalmazza.
+ * 
+ * @author roland
  */
-public class BoardUtilsService {
+public class BoardUtilService {
 
-	private static BoardUtilsService firstInstance = null;
+	private static BoardUtilService firstInstance = null;
 
-	private BoardUtilsService() {
+	private BoardUtilService() {
 	}
 
 	/**
-	 * Példányosítja a {@code BoardUtilsService} osztályt, singleton.
+	 * Példányosítja a {@code BoardUtilService} osztályt, singleton.
 	 * 
 	 * @return az osztály egyetlen példánya
 	 */
-	public static BoardUtilsService getInstance() {
+	public static BoardUtilService getInstance() {
 		if (firstInstance == null) {
-			firstInstance = new BoardUtilsService();
+			firstInstance = new BoardUtilService();
 		}
 		return firstInstance;
 	}
@@ -43,8 +41,7 @@ public class BoardUtilsService {
 	/**
 	 * Egy mentett táblát készít a korongok egy listája alapján.
 	 * 
-	 * @param list
-	 *            a korongok listája
+	 * @param list a korongok listája
 	 * 
 	 */
 	public void saveBoard(List<Piece> list) {
@@ -86,6 +83,7 @@ public class BoardUtilsService {
 	 * Leellenőrzi, hogy véget ért-e a játék.
 	 * 
 	 * @param board tábla amit megvizsgál a metódus
+	 * @param cantMove lehet-e lépni bármelyik koronggal
 	 * @return játék vége
 	 */
 	public boolean checkEndGame(Tile[][] board, boolean cantMove) {
@@ -108,24 +106,9 @@ public class BoardUtilsService {
 			else if (white == 0)
 				Board.setWinner("dark"); // 0 világos van ezért a sötét nyer
 
-			Stage stage = (Stage) board[0][0].getScene().getWindow();
-			Stage stage2 = new Stage();
-			Parent root = new Parent() {
-			};
-			try {
-				root = FXMLLoader.load(getClass().getResource("/fxml/SceneEnd.fxml"));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add("/styles/Styles.css");
+			EndPopUpLoader endPopUpLoader = new EndPopUpLoader();
+			endPopUpLoader.createEndPopUp();
 
-			stage2.setTitle("Dámajáték");
-			stage2.setScene(scene);
-
-			stage2.show();
-			stage.close();
 			return true;
 		}
 		return false;
@@ -137,9 +120,9 @@ public class BoardUtilsService {
 	 * 
 	 * @param piece a korong
 	 * @param newX új x paraméter
-	 * @param newY új x paraméter
-	 * @param x0 
-	 * @param y0
+	 * @param newY új y paraméter
+	 * @param x0 táblán lévő x0
+	 * @param y0 táblán lévő y0
 	 * @return a mozgatás eredménye
 	 */
 	public MoveResult moveResultLogic(Piece piece, int newX, int newY, int x0, int y0) {

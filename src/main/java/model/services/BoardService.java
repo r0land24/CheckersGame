@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
@@ -19,9 +22,13 @@ import model.vo.PieceType;
 import model.vo.Tile;
 
 /**
- * Minden olyan service ami a táblával csinál valamit.
+ * {@code BoardService} osztály a tábla logikáját (serviceket) tartalmazza.
+ * 
+ * @author roland
  */
 public class BoardService {
+
+	private static Logger logger = LoggerFactory.getLogger(BoardService.class);
 
 	private static BoardService firstInstance = null;
 
@@ -44,7 +51,7 @@ public class BoardService {
 	/**
 	 * Létrehoz egy új táblát.
 	 * 
-	 * @return Stage a tábláról
+	 * @return új tábla
 	 */
 	public Parent createContent() {
 		Board.setBoard(new Tile[WIDTH][HEIGHT]);
@@ -82,11 +89,10 @@ public class BoardService {
 	}
 
 	/**
-	 * Létrehoz egy új táblát a mentett táblából.
+	 * Létrehoz egy új táblát az elmentett táblából.
 	 * 
-	 * @param savedBoard
-	 *            lementett tábla
-	 * @return Stage a tábláról
+	 * @param savedBoard elmentett tábla
+	 * @return Stage új tábla
 	 */
 	public Parent createContent(Tile[][] savedBoard) {
 		Board.setBoard(new Tile[WIDTH][HEIGHT]);
@@ -127,13 +133,11 @@ public class BoardService {
 	/**
 	 * Létrehozza a megadott típusú korongot a megadott koordinátákon.
 	 *
-	 * @param type
-	 *            a korong típusa
-	 * @param x
-	 *            az x koordináta
-	 * @param y
-	 *            az y koordináta
-	 * @return létrejött koron
+	 * @param type a korong típusa
+	 * @param x az x koordináta
+	 * @param y az y koordináta
+	 * 
+	 * @return korong
 	 */
 	public Piece makePiece(PieceType type, int x, int y) {
 		Piece piece = new Piece(type, x, y);
@@ -196,14 +200,12 @@ public class BoardService {
 	}
 
 	/**
-	 * Megnézi, hogy mozgatható-e a korong.
+	 * Visszaadja, hogy milyen típusú mozgatásra képes az adott korong.
 	 * 
-	 * @param piece
-	 *            korong
-	 * @param newX
-	 *            új x paraméter
-	 * @param newY
-	 *            új y paraméter
+	 * @param piece a korong
+	 * @param newX az új x paraméter
+	 * @param newY az új y paraméter
+	 * 
 	 * @return mozgás eredménye
 	 */
 	public MoveResult tryMove(Piece piece, int newX, int newY) {
@@ -214,13 +216,10 @@ public class BoardService {
 		int x0 = toBoard(piece.getOldX());
 		int y0 = toBoard(piece.getOldY());
 
-		return BoardUtilsService.getInstance().moveResultLogic(piece, newX, newY, x0, y0);
+		return BoardUtilService.getInstance().moveResultLogic(piece, newX, newY, x0, y0);
 
 	}
 
-	/**
-	 * .
-	 */
 	private int toBoard(double pixel) {
 		return (int) (pixel + TILE_SIZE / 2) / TILE_SIZE;
 	}
@@ -309,8 +308,8 @@ public class BoardService {
 				// if (movedPiece > 0)
 				// break;
 			}
-			if (a == listToShuffleWithPieces.size()-1 && movedPiece == 0) {
-				BoardUtilsService.getInstance().checkEndGame(Board.getBoard(), true);
+			if (a == listToShuffleWithPieces.size() - 1 && movedPiece == 0) {
+				BoardUtilService.getInstance().checkEndGame(Board.getBoard(), true);
 			}
 		}
 	}

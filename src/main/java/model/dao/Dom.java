@@ -27,100 +27,45 @@ import model.vo.Piece;
 import model.vo.PieceType;
 
 /**
- * Osztály az xml fájlokba való írásra.
+ * A {@code Dom} osztály az xml fájl írására és olvasására.
  *
- * Az XML állományokat operációs rendszertől függően máshol keresi. Windows:
- * {@code C:\Users\}felhasználónév{@code \Documents\savedGame.xml} Linux:
- * {@code /home/}felhasználónév{@code /savedGame.xml}.
+ * Az XML állományokat operációs rendszertől függően máshol hozza létre és
+ * keresi a "user.home" property alapján. <br>
+ * Windows:
+ * {@code C:\Users\}felhasználónév{@code \CheckersGame\checkersSavedGame.xml}
+ * Linux:
+ * {@code /home/}felhasználónév{@code /CheckersGame/checkersSavedGame.xml}.
  *
- * @author roland
  */
 public class Dom {
 
 	private static Logger logger = LoggerFactory.getLogger(Dom.class);
 
-	/** Az operációs rendszer neve. */
+	/** A felhasználó home könyvtára operációs rendszertől függetlenül. */
+	public final String userHome = System.getProperty("user.home");
 
-	public final String osName = System.getProperty("os.name").toLowerCase();
-
-	/** Az felhasználói fiók neve. */
-	public final String userName = System.getProperty("user.name");
-
-	/** Az xml fájl elérési helye Windows operációs rendszeren. */
-	public final String windowsFilePath = "C:" + File.separator + "Users" + File.separator + userName + File.separator
-			+ "Documents" + File.separator + "savedGame.xml";
-
-	/** Az xml fájl elérési helye Linux operációs rendszeren. */
-	public final String linuxFilePath = File.separator + "home" + File.separator + userName + File.separator
-			+ "savedGame.xml";
-
-	private File file = null;
+	private File file = new File(userHome + File.separator + "CheckersGame" + File.separator + "chekersSavedGame.xml");
 
 	/**
-	 * Az osztály konstruktora, fájl elérési útvonalát adja vissza különböző
-	 * operációs rendszerek esetén.
+	 * Az osztály paraméter nélküli konstruktora.
 	 */
 	public Dom() {
-		if (osName.contains("windows")) {
-			this.file = new File(windowsFilePath);
-		} else if (osName.contains("linux") || osName.contains("unix")) {
-			this.file = new File(linuxFilePath);
-		}
+
 	}
 
 	/**
-	 * Az xml fájlban lévő korongok adatainak kiolvasása.
+	 * Lementi a játék állását az xml fájlba.
 	 * 
-	 * @return a korongok listája
-	 * 
-	 */
-	public List<Piece> domPieceReader() {
-
-		if (!file.exists()) { // null esetén a menü kikapcsolja a gombot
-			return null;
-		}
-
-		List<Piece> list = new ArrayList<>();
-
-		try {
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-
-			Document doc = db.parse(file);
-			doc.getDocumentElement().normalize();
-
-			NodeList n1 = doc.getElementsByTagName("tile");
-
-			for (int i = 0; i < n1.getLength(); i++) {
-				Element e = (Element) n1.item(i);
-
-				int coordinateX = Integer.parseInt(e.getElementsByTagName("coordinateX").item(0).getTextContent());
-				int coordinateY = Integer.parseInt(e.getElementsByTagName("coordinateY").item(0).getTextContent());
-				String pieceType = e.getElementsByTagName("pieceType").item(0).getTextContent();
-
-				list.add(new Piece(PieceType.valueOf(pieceType), coordinateX, coordinateY));
-			}
-
-		} catch (ParserConfigurationException ex) {
-			logger.error(ex.getMessage());
-		} catch (SAXException ex) {
-			logger.error(ex.getMessage());
-		} catch (IOException ex) {
-			logger.error(ex.getMessage());
-		}
-		return list;
-	}
-
-	/**
-	 * A játék állásának lementése xml fájlba.
-	 * 
-	 * @param list
-	 *            a korongok listája
-	 * @param aisTurn
-	 *            megadja, hogy az adott körben az AI következik vagy sem
+	 * @param list a korongok listája
+	 * @param aisTurn <code>true</code> ha az AI köre következik; 
+	 * 		   		  <code>false</code> ha nem
 	 * 
 	 */
 	public void domWriter(List<Piece> list, boolean aisTurn) {
+
+		File dir = new File(userHome + File.separator + "CheckersGame");
+		dir.mkdirs();
+
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
@@ -167,6 +112,8 @@ public class Dom {
 
 			t.transform(source, result);
 
+			logger.info("Sikeres mentés az XML fájlba!");
+
 		} catch (ParserConfigurationException ex) {
 			logger.error(ex.getMessage());
 		} catch (TransformerConfigurationException ex) {
@@ -178,9 +125,55 @@ public class Dom {
 	}
 
 	/**
-	 * Az xml fájlban lévő körváltásra vonatkozó adat kiolvasása.
+	 * Kiolvassa az xml fájlból a korongok adatait.
+	 * 
+	 * @return a korongok listája
+	 * 
+	 */
+	public List<Piece> domPieceReader() {
+
+		if (!file.exists()) { // null esetén a menü kikapcsolja a gombot
+			return null;
+		}
+
+		List<Piece> list = new ArrayList<>();
+
+		try {
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+
+			Document doc = db.parse(file);
+			doc.getDocumentElement().normalize();
+
+			NodeList n1 = doc.getElementsByTagName("tile");
+
+			for (int i = 0; i < n1.getLength(); i++) {
+				Element e = (Element) n1.item(i);
+
+				int coordinateX = Integer.parseInt(e.getElementsByTagName("coordinateX").item(0).getTextContent());
+				int coordinateY = Integer.parseInt(e.getElementsByTagName("coordinateY").item(0).getTextContent());
+				String pieceType = e.getElementsByTagName("pieceType").item(0).getTextContent();
+
+				list.add(new Piece(PieceType.valueOf(pieceType), coordinateX, coordinateY));
+			}
+
+		} catch (ParserConfigurationException ex) {
+			logger.error(ex.getMessage());
+		} catch (SAXException ex) {
+			logger.error(ex.getMessage());
+		} catch (IOException ex) {
+			logger.error(ex.getMessage());
+		}
+		logger.info("Betöltődtek a korongok az XML fájlból!");
+		return list;
+	}
+
+	/**
+	 * Kiolvassa az xml fájlból, hogy melyik játékos köre következik.
 	 *
-	 * @return megadja, hogy az AI lép következő körben vagy sem
+	 * @return <code>true</code> ha az AI köre következik; 
+	 * 		   <code>false</code> ha nem
+	 * 
 	 */
 	public boolean domAiReader() {
 
@@ -207,6 +200,7 @@ public class Dom {
 		} catch (IOException ex) {
 			logger.error(ex.getMessage());
 		}
+		logger.info("Betöltődött az AI státusza az XML fájlból!");
 		return aiTurn;
 	}
 

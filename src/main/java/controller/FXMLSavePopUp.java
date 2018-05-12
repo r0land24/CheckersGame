@@ -16,15 +16,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import model.dao.Dom;
-import model.services.BoardUtilsService;
+import model.services.BoardUtilService;
 import model.vo.Board;
 
 /**
- * Osztály a mentés ablak kezelésére.
+ * Az {@code FXMLSavePopUp} osztály a felugró játék mentése ablakot kezeli.
+ * 
+ * @author roland
  */
-public class FXMLSaveGame implements Initializable {
+public class FXMLSavePopUp implements Initializable {
 
-	private static Logger logger = LoggerFactory.getLogger(FXMLSaveGame.class);
+	private static Logger logger = LoggerFactory.getLogger(FXMLSavePopUp.class);
 
 	@FXML
 	private Button saveButton, backButton;
@@ -32,11 +34,9 @@ public class FXMLSaveGame implements Initializable {
 	@FXML
 	private void actionSave(ActionEvent event) {
 		try {
-			// XML feltöltése a konrongok típusával, helyzetével és hogy hol tart a kör
+			// XML feltöltése a konrongok típusával, helyzetével és hogy kinek a köre van épp
 			Dom dom = new Dom();
-			dom.domWriter(BoardUtilsService.getInstance().pieceList(), Board.isAIsTurn());
-
-			logger.info("Mentés történt XML-be");
+			dom.domWriter(BoardUtilService.getInstance().pieceList(), Board.isAIsTurn());
 
 			Stage stage = (Stage) saveButton.getScene().getWindow();
 
@@ -46,12 +46,13 @@ public class FXMLSaveGame implements Initializable {
 			stage.setTitle("Dámajáték - Menü");
 			stage.setScene(scene);
 			stage.show();
+			logger.info("Főmenü betöltve!");
 
 			Stage gameStage = (Stage) stage.getUserData(); // a játék stage-e
 			gameStage.close();
 
 		} catch (IOException e) {
-			logger.error("MainMenu betöltése sikertelen: " + e.getMessage());
+			logger.error("Főmenü betöltése sikertelen: " + e.getMessage());
 		}
 	}
 
@@ -59,6 +60,7 @@ public class FXMLSaveGame implements Initializable {
 	private void actionBack(ActionEvent event) {
 		Stage stage = (Stage) backButton.getScene().getWindow();
 		stage.close();
+		logger.info("Visszalépés a játékba!");
 	}
 
 	@Override

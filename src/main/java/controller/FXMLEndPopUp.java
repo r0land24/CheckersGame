@@ -19,11 +19,13 @@ import javafx.stage.Stage;
 import model.vo.Board;
 
 /**
- * Osztály a játék vége ablak kezelésére.
+ * Az {@code FXMLEndPopUp} osztály a játék végén felugró ablakot kezeli.
+ * 
+ * @author roland
  */
-public class FXMLEnd implements Initializable {
+public class FXMLEndPopUp implements Initializable {
 
-	private static Logger logger = LoggerFactory.getLogger(FXMLEnd.class);
+	private static Logger logger = LoggerFactory.getLogger(FXMLEndPopUp.class);
 
 	@FXML
 	private Button endButton;
@@ -42,8 +44,9 @@ public class FXMLEnd implements Initializable {
 			stage.setTitle("Dámajáték - Menü");
 			stage.setScene(scene);
 			stage.show();
+			logger.info("Főmenü betöltve!");
 		} catch (IOException e) {
-			logger.error("MainMenu betöltése sikertelen: " + e.getMessage());
+			logger.error("Főmenü betöltése sikertelen: " + e.getMessage());
 		}
 	}
 
@@ -52,10 +55,10 @@ public class FXMLEnd implements Initializable {
 		String winner = Board.getWinner();
 		if (winner.contains("white")) {
 			endLabelWhite.setVisible(true);
-			logger.info("Játék vége, világos nyert");
-		} else if (winner.contains("dark")){
+			logger.info("Világos nyert!");
+		} else if (winner.contains("dark")) {
 			endLabelDark.setVisible(true);
-			logger.info("Játék vége, sötét nyert");
+			logger.info("Sötét nyert!");
 		}
 	}
 

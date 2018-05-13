@@ -1,4 +1,5 @@
 # ProgTech és ProgKörny beadandó
+# Dámajáték
 
 A dámajáték a világon mindenütt elterjedt, közismert táblás játék. „Kockás” (négyzetrácsos) táblán játsszák, lapos, korong alakú bábukkal. Sokszor sakktáblát és sakkfigurákat használnak, de elterjedt a sakktáblánál nagyobb, 10×10-es tábla is. A játéknak sok változata van, a cél minden esetben az ellenfél összes korongjának levétele, és a legtöbb változatban az is szabály, hogy csak a világos (vagy csak a sötét) mezőkre lehet lépni. A bábukat változattól függően két vagy három sorban kell felállítani, de az ellenfelek korongjai között legalább két sort üresen kell hagyni.
 

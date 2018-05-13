@@ -23,8 +23,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import model.vo.Piece;
-import model.vo.PieceType;
+import model.vo.board.Piece;
+import model.vo.board.PieceType;
 
 /**
  * A {@code Dom} osztály az xml fájl írására és olvasására.
@@ -41,13 +41,13 @@ public class Dom {
 
 	private static Logger logger = LoggerFactory.getLogger(Dom.class);
 
-	/** A felhasználó home könyvtára operációs rendszertől függetlenül. */
+	/** A felhasználó home könyvtára operációs rendszertől függően. */
 	public final String userHome = System.getProperty("user.home");
 
 	private File file = new File(userHome + File.separator + "CheckersGame" + File.separator + "chekersSavedGame.xml");
 
 	/**
-	 * Az osztály paraméter nélküli konstruktora.
+	 * A {@code Dom} osztály paraméter nélküli konstruktora.
 	 */
 	public Dom() {
 

@@ -8,7 +8,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import model.services.BoardService;
 import model.services.BoardUtilService;
-import model.vo.Board;
+import model.vo.board.Board;
 
 /**
  * {@code PressedKeys} osztály a különböző billentyűk leütésének kezelésére.

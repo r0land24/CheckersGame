@@ -4,9 +4,9 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>hu.beadando.nagynorbertroland</groupId>
+	<groupId>hu.unideb.inf</groupId>
 	<artifactId>checkers</artifactId>
-	<version>0.9</version>
+	<version>1.0</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -143,9 +143,6 @@
 							<mainClass>${mainClass}</mainClass>
 						</manifest>
 					</archive>
-					<excludes>
-						<exclude>**/logback.xml</exclude>
-					</excludes>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -255,7 +252,7 @@
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>3.0.0</version>
 				<configuration>
-					<configLocation>${basedir}/config/checkstyle.xml</configLocation>
+					<configLocation>${basedir}/src/main/resources/config/checkstyle.xml</configLocation>
 					<encoding>UTF-8</encoding>
 					<consoleOutput>true</consoleOutput>
 				</configuration>

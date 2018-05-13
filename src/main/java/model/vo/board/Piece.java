@@ -1,6 +1,6 @@
-package model.vo;
+package model.vo.board;
 
-import static model.vo.Board.TILE_SIZE;
+import static model.vo.board.Board.TILE_SIZE;
 
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -34,10 +34,11 @@ public class Piece extends StackPane {
 	}
 
 	/**
-	 * A {@code Piece} osztály konstruktora, inicializálja a {@code type}
-	 * adattagot.
+	 * A {@code Piece} osztály konstruktora, inicializálja az adattagokat.
 	 * 
 	 * @param type a mozgás típusa
+	 * @param x a tábla x koordinátája
+	 * @param y a tábla y koordinátája
 	 */
 	public Piece(PieceType type, int x, int y) {
 		this.type = type;
@@ -107,7 +108,7 @@ public class Piece extends StackPane {
 	}
 
 	/**
-	 * Megadja az X koordinátát.
+	 * Visszaadja az X koordinátát.
 	 * 
 	 * @return az X koordináta
 	 */
@@ -115,13 +116,17 @@ public class Piece extends StackPane {
 		return coordX;
 	}
 
-	/** Beállítja az X koordinátát. */
+	/**
+	 * Beállítja az X koordinátát.
+	 * 
+	 * @param coordX az x koordináta
+	 */
 	public void setCoordX(int coordX) {
 		this.coordX = coordX;
 	}
 
 	/**
-	 * Megadja az Y koordinátát.
+	 * Visszaadja az Y koordinátát.
 	 * 
 	 * @return az Y koordináta
 	 */
@@ -129,7 +134,11 @@ public class Piece extends StackPane {
 		return coordY;
 	}
 
-	/** Beállítja az X koordinátát. */
+	/**
+	 * Beállítja az X koordinátát.
+	 * 
+	 * @param coordY az Y koordináta
+	 */
 	public void setCoordY(int coordY) {
 		this.coordY = coordY;
 	}
@@ -145,27 +154,56 @@ public class Piece extends StackPane {
 
 	/**
 	 * Beállítja a szöveget.
+	 * 
+	 * @param string a szöveg
 	 */
 	public void setText(String string) {
 		this.text.setText(string);
 	}
 
+	/**
+	 * Visszaadja a korong régi X pozícióját a tábla mezőjén.
+	 * 
+	 * @return a régi X pozíció
+	 */
 	public double getOldX() {
 		return oldX;
 	}
 
+	/**
+	 * Visszaadja a korong régi Y pozícióját a tábla mezőjén.
+	 * 
+	 * @return a régi Y pozíció
+	 */
 	public double getOldY() {
 		return oldY;
 	}
 
+	/**
+	 * Visszaadja a korong típusát.
+	 * 
+	 * @return a korong típusa
+	 */
 	public PieceType getType() {
 		return type;
 	}
 
+	/**
+	 * Beállítja a korong típusát.
+	 * 
+	 * @param type a korong típusa
+	 */
 	public void setType(PieceType type) {
 		this.type = type;
 	}
 
+	/**
+	 * Mozgás végrehajtása.
+	 * 
+	 * @param x a korong x koordinátája
+	 * @param y a korong y koordinátája
+	 * 
+	 */
 	public void move(int x, int y) {
 		oldX = x * TILE_SIZE;
 		oldY = y * TILE_SIZE;
@@ -174,6 +212,7 @@ public class Piece extends StackPane {
 		relocate(oldX, oldY);
 	}
 
+	/** Mozgás visszavonása. */
 	public void abortMove() {
 		relocate(oldX, oldY);
 	}

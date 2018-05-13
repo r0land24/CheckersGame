@@ -1,4 +1,4 @@
-package model.vo;
+package model.vo.board;
 
 /**
  * {@code MoveType} osztály a mozgás típusait reprezentálja.

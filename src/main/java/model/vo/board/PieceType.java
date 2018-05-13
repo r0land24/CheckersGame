@@ -1,4 +1,4 @@
-package model.vo;
+package model.vo.board;
 
 /**
  * {@code PieceType} osztály a korongok típusát reprezentálja.

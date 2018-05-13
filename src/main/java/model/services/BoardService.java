@@ -1,8 +1,8 @@
 package model.services;
 
-import static model.vo.Board.HEIGHT;
-import static model.vo.Board.TILE_SIZE;
-import static model.vo.Board.WIDTH;
+import static model.vo.board.Board.HEIGHT;
+import static model.vo.board.Board.TILE_SIZE;
+import static model.vo.board.Board.WIDTH;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,12 +14,13 @@ import org.slf4j.LoggerFactory;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
-import model.vo.Board;
-import model.vo.MoveResult;
-import model.vo.MoveType;
-import model.vo.Piece;
-import model.vo.PieceType;
-import model.vo.Tile;
+import model.vo.ai.AiMoveResult;
+import model.vo.board.Board;
+import model.vo.board.MoveResult;
+import model.vo.board.MoveType;
+import model.vo.board.Piece;
+import model.vo.board.PieceType;
+import model.vo.board.Tile;
 
 /**
  * {@code BoardService} osztály a tábla logikáját (serviceket) tartalmazza.
@@ -85,6 +86,7 @@ public class BoardService {
 				}
 			}
 		}
+		logger.info("Új tábla megrajzolva!");
 		return root;
 	}
 
@@ -127,6 +129,7 @@ public class BoardService {
 				}
 			}
 		}
+		logger.info("Mentett tábla megrajzolva!");
 		return root;
 	}
 
@@ -156,46 +159,10 @@ public class BoardService {
 			int x0 = toBoard(piece.getOldX());
 			int y0 = toBoard(piece.getOldY());
 
-			switch (result.getType()) {
-			case NONE:
-				piece.abortMove();
-				break;
-			case NORMAL:
-				piece.move(newX, newY);
-				Board.getBoard()[x0][y0].setPiece(null);
-				if (newY == 0 || newY == 7) {
-					piece.setText("K");
-					if (piece.getType().equals(PieceType.DARK)) {
-						piece.setType(PieceType.DARK_KING);
-					} else if (piece.getType().equals(PieceType.WHITE)) {
-						piece.setType(PieceType.WHITE_KING);
-					}
-				}
-				Board.getBoard()[newX][newY].setPiece(piece);
-
-				Board.setAIsTurn(!Board.isAIsTurn());
-				break;
-			case KILL:
-				piece.move(newX, newY);
-				Board.getBoard()[x0][y0].setPiece(null);
-				if (newY == 0 || newY == 7) {
-					piece.setText("K");
-					if (piece.getType().equals(PieceType.DARK)) {
-						piece.setType(PieceType.DARK_KING);
-					} else if (piece.getType().equals(PieceType.WHITE)) {
-						piece.setType(PieceType.WHITE_KING);
-					}
-				}
-				Board.getBoard()[newX][newY].setPiece(piece);
-				Piece otherPiece = result.getPiece();
-				Board.getBoard()[toBoard(otherPiece.getOldX())][toBoard(otherPiece.getOldY())].setPiece(null);
-				Board.getPieceGroup().getChildren().remove(otherPiece);
-
-				Board.setAIsTurn(!Board.isAIsTurn());
-				break;
-			}
+			MoveService.switchMoveType(result, piece, newX, newY, x0, y0);
 
 		});
+//		logger.info("Korong létrehozva!");
 		return piece;
 	}
 
@@ -216,11 +183,18 @@ public class BoardService {
 		int x0 = toBoard(piece.getOldX());
 		int y0 = toBoard(piece.getOldY());
 
+//		logger.info("Mozgási eredmény létrejött!");
 		return BoardUtilService.getInstance().moveResultLogic(piece, newX, newY, x0, y0);
 
 	}
 
-	private int toBoard(double pixel) {
+	/**
+	 * A korong pozíciójából a mezőn egy koordinátát készít.
+	 * 
+	 * @param pixel a korong pozíciója a mezőn
+	 * @return a tábla egy koordinátája
+	 */
+	public int toBoard(double pixel) {
 		return (int) (pixel + TILE_SIZE / 2) / TILE_SIZE;
 	}
 
@@ -243,7 +217,11 @@ public class BoardService {
 		Collections.shuffle(listToShuffleWithPieces);
 
 		int movedPiece = 0;
-		for (int a = 0; a < listToShuffleWithPieces.size(); a++) {
+
+		outerloop: for (int a = 0; a < listToShuffleWithPieces.size(); a++) {
+
+			List<AiMoveResult> aiMoveResults = new ArrayList<>();
+			// List<MoveResult> resultList = new ArrayList<>();
 
 			currentPiece = listToShuffleWithPieces.get(a);
 			Piece piece = Board.getBoard()[currentPiece.getCoordX()][currentPiece.getCoordY()].getPiece();
@@ -262,56 +240,28 @@ public class BoardService {
 					int x0 = toBoard(piece.getOldX());
 					int y0 = toBoard(piece.getOldY());
 
-					switch (result.getType()) {
-					case NONE:
-						piece.abortMove();
-						break;
-					case NORMAL:
-						piece.move(newX, newY);
-						Board.getBoard()[x0][y0].setPiece(null);
-						if (newY == 0 || newY == 7) {
-							piece.setText("K");
-							if (piece.getType().equals(PieceType.DARK)) {
-								piece.setType(PieceType.DARK_KING);
-							} else if (piece.getType().equals(PieceType.WHITE)) {
-								piece.setType(PieceType.WHITE_KING);
-							}
-						}
-						Board.getBoard()[newX][newY].setPiece(piece);
+					aiMoveResults.add(new AiMoveResult(result, piece, newX, newY, x0, y0));
 
-						Board.setAIsTurn(!Board.isAIsTurn());
-						movedPiece++;
-						break;
-					case KILL:
-						piece.move(newX, newY);
-						Board.getBoard()[x0][y0].setPiece(null);
-						if (newY == 0 || newY == 7) {
-							piece.setText("K");
-							if (piece.getType().equals(PieceType.DARK)) {
-								piece.setType(PieceType.DARK_KING);
-							} else if (piece.getType().equals(PieceType.WHITE)) {
-								piece.setType(PieceType.WHITE_KING);
-							}
-						}
-						Board.getBoard()[newX][newY].setPiece(piece);
-						Piece otherPiece = result.getPiece();
-						Board.getBoard()[toBoard(otherPiece.getOldX())][toBoard(otherPiece.getOldY())].setPiece(null);
-						Board.getPieceGroup().getChildren().remove(otherPiece);
-
-						Board.setAIsTurn(!Board.isAIsTurn());
-						movedPiece++;
-						break;
-					}
-					if (movedPiece > 0)
-						return;
 				}
-				// if (movedPiece > 0)
-				// break;
+
 			}
-			if (a == listToShuffleWithPieces.size() - 1 && movedPiece == 0) {
-				BoardUtilService.getInstance().checkEndGame(Board.getBoard(), true);
+
+			Collections.shuffle(aiMoveResults);
+			for (int n = 0; n < aiMoveResults.size(); n++) {
+				MoveType moveType = MoveService.switchMoveType(aiMoveResults.get(n));
+				if (moveType.equals(MoveType.NORMAL) || moveType.equals(MoveType.KILL)) {
+					movedPiece++;
+					break outerloop;
+				}
 			}
+
 		}
+
+		// itt nézzük sikerült e lépni úgy hogy még vannak korongjai a gépnek
+		if (listToShuffleWithPieces.size() != 0 && movedPiece == 0) {
+			BoardUtilService.getInstance().checkEndGame(Board.getBoard(), true);
+		} else
+			logger.info("Az AI lépett!");
 	}
 
 }

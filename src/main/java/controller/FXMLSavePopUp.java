@@ -17,7 +17,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import model.dao.Dom;
 import model.services.BoardUtilService;
-import model.vo.Board;
+import model.vo.board.Board;
 
 /**
  * Az {@code FXMLSavePopUp} osztály a felugró játék mentése ablakot kezeli.

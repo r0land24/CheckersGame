@@ -16,7 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import model.vo.Board;
+import model.vo.board.Board;
 
 /**
  * Az {@code FXMLEndPopUp} osztály a játék végén felugró ablakot kezeli.

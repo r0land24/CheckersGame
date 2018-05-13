@@ -9,9 +9,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import model.vo.Board;
-import model.vo.Piece;
-import model.vo.PieceType;
+import model.vo.board.Board;
+import model.vo.board.Piece;
+import model.vo.board.PieceType;
 
 public class BoardUtilServiceTest {
 

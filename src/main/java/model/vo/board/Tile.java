@@ -1,6 +1,6 @@
-package model.vo;
+package model.vo.board;
 
-import static model.vo.Board.TILE_SIZE;
+import static model.vo.board.Board.TILE_SIZE;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;

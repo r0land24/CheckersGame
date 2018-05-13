@@ -1,4 +1,4 @@
-package model.vo;
+package model.vo.board;
 
 /**
  * A {@code MoveResult} osztály a mozgás eredményét reprezentálja.

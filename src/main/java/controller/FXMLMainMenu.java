@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import model.dao.Dom;
 import model.services.BoardService;
 import model.services.BoardUtilService;
-import model.vo.Board;
+import model.vo.board.Board;
 
 /**
  * Az {@code FXMLMainMenu} osztály a főmenüt kezeli.

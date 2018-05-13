@@ -9,7 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.vo.Board;
+import model.vo.board.Board;
 
 /**
  * {@code EndPopUpLoader} osztály a játék vége felugró ablak betöltésére.

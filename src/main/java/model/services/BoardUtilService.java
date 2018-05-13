@@ -1,18 +1,21 @@
 package model.services;
 
-import static model.vo.Board.HEIGHT;
-import static model.vo.Board.WIDTH;
+import static model.vo.board.Board.HEIGHT;
+import static model.vo.board.Board.WIDTH;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import controller.util.EndPopUpLoader;
-import model.vo.Board;
-import model.vo.MoveResult;
-import model.vo.MoveType;
-import model.vo.Piece;
-import model.vo.PieceType;
-import model.vo.Tile;
+import model.vo.board.Board;
+import model.vo.board.MoveResult;
+import model.vo.board.MoveType;
+import model.vo.board.Piece;
+import model.vo.board.PieceType;
+import model.vo.board.Tile;
 
 /**
  * {@code BoardUtilService} osztály a tábla logikáját (servicek) tartalmazza.
@@ -21,6 +24,8 @@ import model.vo.Tile;
  */
 public class BoardUtilService {
 
+	private static Logger logger = LoggerFactory.getLogger(BoardService.class);
+	
 	private static BoardUtilService firstInstance = null;
 
 	private BoardUtilService() {
@@ -59,6 +64,7 @@ public class BoardUtilService {
 				}
 			}
 		}
+		logger.info("XML adatok elmentve az aktuális táblába!");
 	}
 
 	/**
@@ -76,6 +82,7 @@ public class BoardUtilService {
 				}
 			}
 		}
+//		logger.info("Korongok listába szedve");
 		return list;
 	}
 

@@ -1,7 +1,7 @@
 package model.services;
 
-import static model.vo.Board.HEIGHT;
-import static model.vo.Board.WIDTH;
+import static model.vo.board.Board.HEIGHT;
+import static model.vo.board.Board.WIDTH;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -10,12 +10,12 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import model.services.BoardService;
-import model.vo.Board;
-import model.vo.MoveResult;
-import model.vo.MoveType;
-import model.vo.Piece;
-import model.vo.PieceType;
-import model.vo.Tile;
+import model.vo.board.Board;
+import model.vo.board.MoveResult;
+import model.vo.board.MoveType;
+import model.vo.board.Piece;
+import model.vo.board.PieceType;
+import model.vo.board.Tile;
 
 public class BoardServiceTest {
 

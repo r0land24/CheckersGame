@@ -6,9 +6,6 @@ import org.slf4j.LoggerFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import model.services.BoardService;
-import model.services.BoardUtilService;
-import model.vo.board.Board;
 
 /**
  * {@code PressedKeys} osztály a különböző billentyűk leütésének kezelésére.
@@ -19,38 +16,38 @@ public class PressedKeys {
 
 	private static Logger logger = LoggerFactory.getLogger(PressedKeys.class);
 
-	/**
-	 * A space billentyű leütésére a másik játékos léphet, amennyiben már volt
-	 * helyes lépés.
-	 *
-	 * @param stage amin élni fog ez a funkció
-	 */
-	public void addSpace(Stage stage) {
-		stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
-			if (KeyCode.SPACE == event.getCode()) {
-				logger.info("SPACE gomb lenyomva!");
-				BoardUtilService.getInstance().checkEndGame(Board.getBoard(), false);
-				if (Board.isAIsTurn()) {
-					BoardService.getInstance().aImove();
-				}
-			}
-		});
-	}
-
 //	!! Az AI automatikus lépésének bevezetése után ez a funkció fölöslegessé vált, de azért itt marad szemléltetésnek !!
 //	/**
-//	 * Az escape billentyű leütésére felugrik a játék mentése ablak.
+//	 * A space billentyű leütésére a másik játékos léphet, amennyiben már volt
+//	 * helyes lépés.
 //	 *
 //	 * @param stage amin élni fog ez a funkció
 //	 */
-//	public void addEscape(Stage stage) {
-//		SavePopUpLoader savePopUpLoader = new SavePopUpLoader();
+//	public void addSpace(Stage stage) {
 //		stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
-//			if (KeyCode.ESCAPE == event.getCode()) {
-//				logger.info("ESCAPE gomb lenyomva!");
-//				savePopUpLoader.createSavePopUp(stage);
+//			if (KeyCode.SPACE == event.getCode()) {
+//				logger.info("SPACE gomb lenyomva!");
+//				BoardUtilService.getInstance().checkEndGame(Board.getBoard(), false);
+//				if (Board.isAIsTurn()) {
+//					BoardService.getInstance().aImove();
+//				}
 //			}
 //		});
 //	}
+
+	/**
+	 * Az escape billentyű leütésére felugrik a játék mentése ablak.
+	 *
+	 * @param stage amin élni fog ez a funkció
+	 */
+	public void addEscape(Stage stage) {
+		SavePopUpLoader savePopUpLoader = new SavePopUpLoader();
+		stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
+			if (KeyCode.ESCAPE == event.getCode()) {
+				logger.info("ESCAPE gomb lenyomva!");
+				savePopUpLoader.createSavePopUp(stage);
+			}
+		});
+	}
 
 }

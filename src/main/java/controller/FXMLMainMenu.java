@@ -38,8 +38,8 @@ public class FXMLMainMenu implements Initializable {
 		Scene scene = new Scene(service.createContent()); // elkészül a tábla feltöltve
 
 		PressedKeys key = new PressedKeys();
-		key.addSpace(stage); // space gombnyomásra akció
-//		key.addEscape(stage); // escape gombnyomásra akció
+//		key.addSpace(stage); // space gombnyomásra akció
+		key.addEscape(stage); // escape gombnyomásra akció
 
 		logger.info("Új játék elindult!");
 
@@ -62,8 +62,8 @@ public class FXMLMainMenu implements Initializable {
 		Scene scene = new Scene(service.createContent(Board.getSavedBoard()));
 
 		PressedKeys key = new PressedKeys();
-		key.addSpace(stage);
-//		key.addEscape(stage);
+//		key.addSpace(stage);
+		key.addEscape(stage);
 
 		logger.info("Betöltődött a mentés, játék elindult!");
 

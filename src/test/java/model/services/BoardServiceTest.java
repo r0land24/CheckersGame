@@ -5,11 +5,9 @@ import static model.vo.board.Board.WIDTH;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import model.services.BoardService;
 import model.vo.board.Board;
 import model.vo.board.MoveResult;
 import model.vo.board.MoveType;
@@ -66,7 +64,7 @@ public class BoardServiceTest {
 		BoardService.getInstance().createContent();
 		assertFalse(Board.isAIsTurn());
 		BoardService.getInstance().aImove();
-		assertTrue(Board.isAIsTurn());
+		assertFalse(Board.isAIsTurn());
 		BoardService.getInstance().aImove();
 		assertFalse(Board.isAIsTurn());
 	}

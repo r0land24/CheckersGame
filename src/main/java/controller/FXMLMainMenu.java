@@ -39,7 +39,7 @@ public class FXMLMainMenu implements Initializable {
 
 		PressedKeys key = new PressedKeys();
 		key.addSpace(stage); // space gombnyomásra akció
-		key.addEscape(stage); // escape gombnyomásra akció
+//		key.addEscape(stage); // escape gombnyomásra akció
 
 		logger.info("Új játék elindult!");
 
@@ -63,7 +63,7 @@ public class FXMLMainMenu implements Initializable {
 
 		PressedKeys key = new PressedKeys();
 		key.addSpace(stage);
-		key.addEscape(stage);
+//		key.addEscape(stage);
 
 		logger.info("Betöltődött a mentés, játék elindult!");
 

@@ -185,7 +185,6 @@ public class BoardService {
 
 //		logger.info("Mozgási eredmény létrejött!");
 		return BoardUtilService.getInstance().moveResultLogic(piece, newX, newY, x0, y0);
-
 	}
 
 	/**
@@ -260,8 +259,9 @@ public class BoardService {
 		// itt nézzük sikerült e lépni úgy hogy még vannak korongjai a gépnek
 		if (listToShuffleWithPieces.size() != 0 && movedPiece == 0) {
 			BoardUtilService.getInstance().checkEndGame(Board.getBoard(), true);
-		} else
+		} else {
 			logger.info("Az AI lépett!");
+		}
 	}
 
 }

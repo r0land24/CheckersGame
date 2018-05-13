@@ -116,6 +116,8 @@ public class BoardUtilService {
 			EndPopUpLoader endPopUpLoader = new EndPopUpLoader();
 			endPopUpLoader.createEndPopUp();
 
+			Board.setAIsTurn(false); //ha új játékot kezdünk tudjunk lépni
+			
 			return true;
 		}
 		return false;

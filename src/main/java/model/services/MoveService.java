@@ -66,6 +66,12 @@ public class MoveService {
 			}
 			
 			Board.setAIsTurn(!Board.isAIsTurn());
+			
+			if (Board.isAIsTurn()) {
+				BoardService.getInstance().aImove();
+			}
+			BoardUtilService.getInstance().checkEndGame(Board.getBoard(), false);
+			
 			return MoveType.NORMAL;
 		case KILL:
 			piece.move(newX, newY);
@@ -89,6 +95,12 @@ public class MoveService {
 			}
 			
 			Board.setAIsTurn(!Board.isAIsTurn());
+			
+			if (Board.isAIsTurn()) {
+				BoardService.getInstance().aImove();
+			}
+			BoardUtilService.getInstance().checkEndGame(Board.getBoard(), false);
+			
 			return MoveType.KILL;
 		default:
 			return null;

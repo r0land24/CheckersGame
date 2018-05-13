@@ -37,19 +37,20 @@ public class PressedKeys {
 		});
 	}
 
-	/**
-	 * Az escape billentyű leütésére felugrik a játék mentése ablak.
-	 *
-	 * @param stage amin élni fog ez a funkció
-	 */
-	public void addEscape(Stage stage) {
-		SavePopUpLoader savePopUpLoader = new SavePopUpLoader();
-		stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
-			if (KeyCode.ESCAPE == event.getCode()) {
-				logger.info("ESCAPE gomb lenyomva!");
-				savePopUpLoader.createSavePopUp(stage);
-			}
-		});
-	}
+//	!! Az AI automatikus lépésének bevezetése után ez a funkció fölöslegessé vált, de azért itt marad szemléltetésnek !!
+//	/**
+//	 * Az escape billentyű leütésére felugrik a játék mentése ablak.
+//	 *
+//	 * @param stage amin élni fog ez a funkció
+//	 */
+//	public void addEscape(Stage stage) {
+//		SavePopUpLoader savePopUpLoader = new SavePopUpLoader();
+//		stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
+//			if (KeyCode.ESCAPE == event.getCode()) {
+//				logger.info("ESCAPE gomb lenyomva!");
+//				savePopUpLoader.createSavePopUp(stage);
+//			}
+//		});
+//	}
 
 }

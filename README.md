@@ -11,7 +11,7 @@ Az nyeri meg a játékot, aki lépésképtelen helyzetbe szorítja ellenfelét (
 
 Játék kezelés
 ------
-A tábla betöltése után a körváltás a SPACE gomb lenyomására történik, amennyiben léptünk az adott körben. ESCAPE gomb lenyomása esetén a felugró ablakban elmenthetjük a játék jelenlegi állását, amit bármikor újra betölthetünk.
+A játék elkezdése után a korongok léptetése az egérrel történik(drag and drop). Az ESCAPE gomb lenyomása esetén a felugró ablakban elmenthetjük a játék jelenlegi állását, amit bármikor újra betölthetünk.
 
 Futtatásra az egyik opció
 ------

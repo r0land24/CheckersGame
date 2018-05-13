@@ -26,6 +26,8 @@ public class Piece extends StackPane {
 
 	private PieceType type;
 
+	private Circle circle;
+
 	/**
 	 * A {@code Piece} osztály paraméter nélküli konstruktora.
 	 */
@@ -46,15 +48,15 @@ public class Piece extends StackPane {
 		// relocate(x * TILE_SIZE, y * TILE_SIZE);
 		move(x, y); // relocate helyett MOVE
 
-		Circle ellipse = new Circle(TILE_SIZE * 0.26);
-		ellipse.setFill(type == PieceType.DARK ? Color.CORNFLOWERBLUE : Color.WHITE);
+		circle = new Circle(TILE_SIZE * 0.26);
+		circle.setFill(type == PieceType.DARK ? Color.CORNFLOWERBLUE : Color.WHITE);
 
-		ellipse.setStroke(Color.BLACK);
-		ellipse.setStrokeWidth(TILE_SIZE * 0.03);
+		circle.setStroke(Color.BLACK);
+		circle.setStrokeWidth(TILE_SIZE * 0.03);
 
-		ellipse.setTranslateX((TILE_SIZE - TILE_SIZE * 0.3 * 2) / 2);
-		ellipse.setTranslateY((TILE_SIZE - TILE_SIZE * 0.3 * 2) / 2);
-		getChildren().add(ellipse);
+		circle.setTranslateX((TILE_SIZE - TILE_SIZE * 0.3 * 2) / 2);
+		circle.setTranslateY((TILE_SIZE - TILE_SIZE * 0.3 * 2) / 2);
+		getChildren().add(circle);
 
 		// TEXT
 		getChildren().add(text);

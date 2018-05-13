@@ -1,5 +1,6 @@
 package model.services;
 
+import javafx.scene.paint.Color;
 import model.vo.ai.AiMoveResult;
 import model.vo.board.Board;
 import model.vo.board.MoveResult;
@@ -8,8 +9,7 @@ import model.vo.board.Piece;
 import model.vo.board.PieceType;
 
 /**
- * {@code MoveService} osztály a korongok mozgatásának logikáját
- * tartalmazza.
+ * {@code MoveService} osztály a korongok mozgatásának logikáját tartalmazza.
  * 
  * @author roland
  */
@@ -61,6 +61,10 @@ public class MoveService {
 			}
 			Board.getBoard()[newX][newY].setPiece(piece);
 
+			if (Board.isAIsTurn()) {
+				marker(x0, y0, newX, newY, Color.WHITE);
+			}
+			
 			Board.setAIsTurn(!Board.isAIsTurn());
 			return MoveType.NORMAL;
 		case KILL:
@@ -80,12 +84,32 @@ public class MoveService {
 					.toBoard(otherPiece.getOldY())].setPiece(null);
 			Board.getPieceGroup().getChildren().remove(otherPiece);
 
+			if (Board.isAIsTurn()) {
+				marker(x0, y0, newX, newY, Color.DEEPSKYBLUE);
+			}
+			
 			Board.setAIsTurn(!Board.isAIsTurn());
 			return MoveType.KILL;
 		default:
 			return null;
 		}
 
+	}
+
+	private static void marker(int x0, int y0, int newX, int newY, Color color) {
+		Board.getBoard()[Board.oldMarkerX][Board.oldMarkerY].setStroke(Color.BLACK);
+		Board.getBoard()[Board.oldMarkerX][Board.oldMarkerY].setStrokeWidth(0);
+		Board.getBoard()[Board.markerX][Board.markerY].setStroke(Color.BLACK);
+		Board.getBoard()[Board.markerX][Board.markerY].setStrokeWidth(0);
+		Board.oldMarkerX = x0;
+		Board.oldMarkerY = y0;
+		Board.getBoard()[x0][y0].setStroke(color);
+		Board.getBoard()[x0][y0].setStrokeWidth(2);
+
+		Board.markerX = newX;
+		Board.markerY = newY;
+		Board.getBoard()[newX][newY].setStroke(color);
+		Board.getBoard()[newX][newY].setStrokeWidth(2);
 	}
 
 }

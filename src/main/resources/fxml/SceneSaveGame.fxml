@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" opacity="0.84" prefHeight="92.0" prefWidth="258.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLSavePopUp">
+<AnchorPane id="AnchorPane" maxHeight="92.0" maxWidth="260.0" minHeight="92.0" minWidth="260.0" opacity="0.84" prefHeight="92.0" prefWidth="260.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLSavePopUp">
    <children>
       <Button id="saveGame" fx:id="saveButton" layoutX="15.0" layoutY="14.0" mnemonicParsing="false" onAction="#actionSave" text="Játék mentése és kilépés menübe">
          <font>

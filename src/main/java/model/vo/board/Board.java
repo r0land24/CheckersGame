@@ -24,6 +24,18 @@ public class Board {
 	private static Tile[][] savedBoard = null; // new TileVo[WIDTH][HEIGHT];
 	private static Group tileGroup = null;
 	private static Group pieceGroup = null;
+	
+	/** Az AI lépését jelölő X koordináta. */
+	public static int markerX = 0;
+	
+	/** Az AI lépését jelölő Y koordináta. */
+	public static int markerY = 0;
+	
+	/** Az AI lépésének kiinduló pozícióját jelölő X koordináta. */
+	public static int oldMarkerX = 0;
+	
+	/** Az AI lépésének kiinduló pozícióját jelölő Y koordináta. */
+	public static int oldMarkerY = 0;
 
 	/**
 	 * Visszaadja az aktuális táblát.

@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="165.0" prefWidth="337.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLMainMenu">
+<AnchorPane id="AnchorPane" maxHeight="210.0" maxWidth="340.0" minHeight="210.0" minWidth="340.0" prefHeight="210.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLMainMenu">
     <children>
-        <Button id="newGame" fx:id="newGameButton" layoutX="139.0" layoutY="56.0" onAction="#actionNewGame" text="Új játék">
+        <Button id="newGame" fx:id="newGameButton" layoutX="140.0" layoutY="56.0" onAction="#actionNewGame" text="Új játék">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Button>
-      <Text layoutX="116.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dámajáték">
+      <Text layoutX="117.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dámajáték">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
       </Text>
-      <Button fx:id="loadGameButton" layoutX="94.0" layoutY="88.0" onAction="#actionLoadGame" text="Legutóbbi játék betöltése" />
-      <Label layoutX="15.0" layoutY="137.0" prefHeight="64.0" prefWidth="253.0" text="Megyjegyzés: a körváltás SPACE gomb megnyomására történik, az átláthatóság kedvéért!" textFill="#8d120c" wrapText="true">
+      <Button fx:id="loadGameButton" layoutX="95.0" layoutY="93.0" onAction="#actionLoadGame" text="Legutóbbi játék betöltése" />
+      <Label layoutX="22.0" layoutY="153.0" prefHeight="37.0" prefWidth="253.0" text="Megyjegyzés: a körváltás a SPACE gomb megnyomására történik!" textFill="#8d120c" wrapText="true">
          <font>
             <Font name="System Italic" size="12.0" />
          </font>
